@@ -1224,6 +1224,48 @@
   "sharedFolders": {
     "message": "Paylaşılan qovluqlar"
   },
+  "sharedFoldersInParent": {
+    "message": "Shared folders in $NAME$",
+    "description": "Titles the grid of shared folders nested directly inside the shared folder being viewed.",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Engineering"
+      }
+    }
+  },
+  "sharedFolderCount": {
+    "message": "$COUNT$ shared folders",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "16"
+      }
+    }
+  },
+  "sharedFolderSingular": {
+    "message": "$COUNT$ shared folder",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "moreSharedFoldersShownAbove": {
+    "message": "$COUNT$ more shared folders shown above this button",
+    "description": "Announced to screen readers when a collapsed grid of shared folders is expanded. The revealed shared folders render above the button that expanded them.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "moreSharedFoldersShownAboveSingular": {
+    "message": "1 more shared folder shown above this button",
+    "description": "Announced to screen readers when a collapsed grid of shared folders is expanded. The revealed shared folders render above the button that expanded them."
+  },
   "myFolder": {
     "message": "Qovluğum"
   },
@@ -3736,9 +3778,6 @@
   },
   "restrictedItemTypePolicy": {
     "message": "Kart element növünü sil"
-  },
-  "restrictedItemTypePolicyDesc": {
-    "message": "Üzvlərin kart element növlərini yaratmasına icazə verməyin. Mövcud kartlar avtomatik silinəcək."
   },
   "restrictedItemTypePolicyDescV2": {
     "message": "Üzvlərə öz seyflərində kredit kartı yaratmasına və saxlamasına icazə verməyin. Bu siyasət işə salındığı zaman, mövcud kartlar avtomatik olaraq gizlədiləcək."
@@ -6793,8 +6832,8 @@
   "openOrgInviteAcceptFailed": {
     "message": "Dəvət qəbul edilə bilmədi. Təşkilat adminindən yeni bir dəvət keçidi göndərməsini xahiş edin."
   },
-  "openOrgInviteAcceptFailedTitle": {
-    "message": "Dəvət qəbul edilə bilmir"
+  "cannotAcceptInvitation": {
+    "message": "Cannot accept invitation"
   },
   "openOrgInviteAcceptAlreadyMember": {
     "message": "Artıq bu təşkilatın üzvüsünüz."
@@ -7369,6 +7408,21 @@
       }
     }
   },
+  "ssoStagedOrgUserDirectInviteEmailSent": {
+    "message": "Check your email to finish joining $ORGANIZATION_NAME$.",
+    "placeholders": {
+      "organization_name": {
+        "content": "$1",
+        "example": "Acme Inc"
+      }
+    }
+  },
+  "ssoNoSeatsAvailableMessage": {
+    "message": "This organization is not able to accept new members at the moment. Contact your admin for assistance."
+  },
+  "inviteSentToEmail": {
+    "message": "Invite sent to email"
+  },
   "acceptPolicies": {
     "message": "Bu qutunu işarələyərək aşağıdakılarla razılaşırsınız:"
   },
@@ -7638,17 +7692,11 @@
   "twoStepLoginPolicyDescV2": {
     "message": "Üzvlərdən iki addımlı girişi qurmalarını tələb et. Bu siyasət, sahiblərə və adminlərə tətbiq olunmayacaq."
   },
-  "twoStepLoginPolicyWarning": {
-    "message": "Sahib və ya Administrator olmayan və fərdi hesablarında \"iki addımlı giriş\"i fəallaşdırmayan təşkilat üzvləri təşkilatdan xaric ediləcək və dəyişiklik haqqında onları məlumatlandıran e-poçt göndəriləcək."
-  },
   "twoStepLoginPolicyWarningV2": {
     "message": "Bu siyasəti fəallaşdırsanız, öz hesabında iki addımlı girişi fəal etməmiş bütün istifadəçilərin erişimi ləğv ediləcək. Təsirlənən istifadəçilər, e-poçt ilə məlumatlandırılacaq."
   },
   "twoStepLoginPolicyUserWarning": {
     "message": "İstifadəçi hesabında \"iki addımlı giriş\"in qurulmasını tələb edən təşkilatın üzvüsünüz. İki addımlı giriş provayderlərinin hamısını söndürsəniz, bu təşkilatdan avtomatik olaraq xaric ediləcəksiniz."
-  },
-  "passwordGeneratorPolicyDesc": {
-    "message": "Parol yaradıcı üçün tələbləri ayarla."
   },
   "passwordGeneratorPolicyDescV2": {
     "message": "Üzvlər tərəfindən yaradılmış parollar üçün minimum tələblər dəstini seçin."
@@ -7912,9 +7960,6 @@
   "singleOrgDesc": {
     "message": "İstifadəçilərin digər təşkilatlara qoşulmasını məhdudlaşdırın."
   },
-  "singleOrgPolicyDesc": {
-    "message": "Üzvlərin digər təşkilatlara qoşulmasını məhdudlaşdır. Bu siyasət, domen doğrulamasını fəallaşdıran təşkilatlar üçün tələb olunur."
-  },
   "singleOrgPolicyDescVfo1": {
     "message": "Restrict members from joining other shared or organization vaults.",
     "description": "VFO1 terminology variant of 'singleOrgPolicyDesc'"
@@ -7947,9 +7992,6 @@
     "message": "Require members to log in with the Enterprise Single Sign-On method. This policy won't be enforced for owners and admins.",
     "description": "VFO1 terminology variant of 'requireSsoPolicyDescV2', shown in the policy edit drawer"
   },
-  "requireSsoPolicyDesc": {
-    "message": "Üzvlərin \"Müəssisə üçün vahid daxil olma\" üsulu ilə giriş etməsini tələb et."
-  },
   "requireSsoPolicyTitle": {
     "message": "Vahid daxil olma (SSO) seçimini tələb et"
   },
@@ -7958,9 +8000,6 @@
   },
   "prerequisite": {
     "message": "Ön şərt"
-  },
-  "requireSsoPolicyReq": {
-    "message": "Bu siyasəti aktivləşdirməzdən əvvəl vahid təşkilat üçün Müəssisə siyasəti işə salınmalıdır."
   },
   "requireSsoPolicyReqV2": {
     "message": "Bu siyasəti fəallaşdırmazdan əvvəl vahid təşkilat siyasətini fəallaşdırmalısınız."
@@ -8379,9 +8418,6 @@
   "centralizeDataOwnershipBenefit2": {
     "message": "Üzvlərin tərk etməsi və təhvil zamanı elementləri asanlıqla köçürün, erişim zamanı heç bir boşluğa yer buraxmayın."
   },
-  "centralizeDataOwnershipBenefit3": {
-    "message": "Bütün istifadəçilərə öz giriş məlumatlarını idarə edə biləcəkləri \"Elementlərim\" sahəsi verin."
-  },
   "centralizeDataOwnershipWarningTitle": {
     "message": "Üzvlərdən öz elementlərini köçürməsi soruşulsun"
   },
@@ -8390,9 +8426,6 @@
   },
   "centralizeDataOwnershipWarningLink": {
     "message": "Köçürmə barədə daha ətraflı"
-  },
-  "promptUsersToMoveItems": {
-    "message": "İstifadəçilərdən fərdi seyf elementlərini təşkilata daşımasını istəyin"
   },
   "promptUsersToMoveItemsCallout": {
     "message": "Üzvlərdən elementləri təşkilata köçürməsi, ya da tərk etməsi soruşulacaq. Əgər tərk etsələr, erişimləri ləğv ediləcək, ancaq istənilən vaxt bərpa edə biləcəklər."
@@ -8605,10 +8638,6 @@
   "desktopAutotypePolicyTitleV2": {
     "message": "Masaüstü avto-yazma ilkin ayarı"
   },
-  "desktopAutotypePolicyDesc": {
-    "message": "Üzvlər üçün Masaüstü avto-yazma ayarını ilkin olaraq işə salın. Üzvlər Masaüstü client-ində avto-yazma ayarını manual olaraq söndürə bilər.",
-    "description": "This policy will enable Desktop Autotype by default for members on Unlock."
-  },
   "desktopAutotypePolicyDescV2": {
     "message": "Masaüstü avto-yazmanı üzvlər üçün fəallaşdır. Üzvlər, masaüstü istəkçisində avto-yazmanı manual olaraq söndürə biləcək."
   },
@@ -8694,9 +8723,6 @@
   "uriMatchDetectionPolicy": {
     "message": "İlkin URI uyuşma aşkarlaması"
   },
-  "uriMatchDetectionPolicyDesc": {
-    "message": "Avto-doldurma üçün giriş məlumatlarının nə vaxt təklif ediləcəyini müəyyənləşdirin. Adminlər və sahiblər bu siyasətdən azaddır."
-  },
   "uriMatchDetectionPolicyDescVfo1": {
     "message": "Set the default URI match detection for all items created by members.",
     "description": "VFO1 terminology variant of 'uriMatchDetectionPolicyDesc', shown in the policies list"
@@ -8710,6 +8736,23 @@
   "invalidUriMatchDefaultPolicySetting": {
     "message": "Lütfən yararlı bir URI uyuşma aşkarlama variantını seçin.",
     "description": "Error message displayed when a user attempts to save URI match detection policy settings with an invalid selection."
+  },
+  "fillAssistPolicy": {
+    "message": "Activate fill assist",
+    "description": "'Fill assist' is a Bitwarden feature name; do not translate."
+  },
+  "fillAssistPolicyDesc": {
+    "message": "Turn on fill assist by default for all members. This feature uses reviewed, site-specific instructions to improve autofill accuracy on websites known to be difficult to autofill."
+  },
+  "fillAssistRulesUrl": {
+    "message": "Custom autofill rule set"
+  },
+  "fillAssistRulesUrlHint": {
+    "message": "By default, fill assist uses Bitwarden's curated rule set. Enter a URL here to override it with your own."
+  },
+  "invalidFillAssistRulesUrl": {
+    "message": "Enter a valid URL",
+    "description": "Error message displayed when a user attempts to save the fill assist policy with an invalid or missing rules URL."
   },
   "modifiedPolicyId": {
     "message": "$ID$ siyasətinə düzəliş edildi.",
@@ -8725,6 +8768,9 @@
   },
   "estimatedTax": {
     "message": "Təxmini vergi"
+  },
+  "subtotal": {
+    "message": "Subtotal"
   },
   "custom": {
     "message": "Özəl"
@@ -9493,9 +9539,6 @@
   "automaticAppLoginWithSSO": {
     "message": "SSO ilə avtomatik giriş"
   },
-  "automaticAppLoginWithSSODesc": {
-    "message": "SSO təhlükəsizliyini və rahatlığını idarə edilməyən tətbiqlərə genişləndirin. İstifadəçilər bir tətbiqi kimlik provayderinizdən işə saldığı zaman, onların giriş məlumatları avtomatik olaraq doldurulub təqdim ediləcək. Beləliklə kimlik provayderindən tətbiqə bir kliklə təhlükəsiz axın yaradılır."
-  },
   "automaticAppLoginWithSSODescV2": {
     "message": "İstifadəçilər kimlik provayderinizdən bir tətbiq başlatdığı zaman, onların giriş məlumatları avtomatik olaraq doldurulub göndəriləcək və tək bir kliklə təhlükəsiz giriş təmin ediləcək."
   },
@@ -9630,9 +9673,6 @@
   },
   "disableExport": {
     "message": "Xaricə köçürməni sil"
-  },
-  "disablePersonalVaultExportDescription": {
-    "message": "Üzvlərin fərdi seyflərindən veriləri xaricə köçürməsinə icazə verilməsin."
   },
   "disablePersonalVaultExportDescriptionV2": {
     "message": "Üzvlərin öz fərdi seyflərindən veriləri xaricə köçürməsinə icazə verməyin. Bu siyasət, sahiblərə və adminlərə şamil olunmur."
@@ -14848,9 +14888,6 @@
     "message": "Remove Sponsored Families Plan",
     "description": "VFO1 terminology variant of 'freeFamiliesSponsorshipPolicyTitleV2', shown in the drawer title"
   },
-  "freeFamiliesSponsorshipPolicyDesc": {
-    "message": "Üzvlərin bu təşkilat vasitəsilə Families planını istifadə etməsinə icazə verməyin."
-  },
   "freeFamiliesSponsorshipPolicyDescV2": {
     "message": "Üzvlərin təşkilatınız tərəfindən dəstəklənən Ailələr planından yararlanmasına icazə verməyin."
   },
@@ -15308,9 +15345,6 @@
   "removeUnlockWithPinPolicyTitle": {
     "message": "Kilidi PIN ilə açmanı ləğv et"
   },
-  "removeUnlockWithPinPolicyDesc": {
-    "message": "Üzvlərin öz hesablarının kilidini PIN ilə açmasına icazə verilməsin."
-  },
   "removeUnlockWithPinPolicyDescV2": {
     "message": "Üzvlərin öz hesablarının kilidini PIN ilə açmasına icazə verilməyəcək."
   },
@@ -15698,6 +15732,9 @@
   "providersubCanceledmessage": {
     "message": "Təkrar abunə olmaq üçün Bitwarden Müştəri Dəstəyi ilə əlaqə saxlayın."
   },
+  "showAll": {
+    "message": "Show all"
+  },
   "showMore": {
     "message": "Daha çox göstər"
   },
@@ -15745,16 +15782,21 @@
   "checkInputFormat": {
     "message": "Xəta üçün giriş formatını yoxlayın."
   },
-  "exampleTaxIdFormat": {
-    "message": "Nümunə $CODE$ formatı: $EXAMPLE$",
+  "taxIdFormatExample": {
+    "message": "Example tax ID format: $EXAMPLE$",
     "placeholders": {
-      "code": {
-        "content": "$1",
-        "example": "ABN"
-      },
       "example": {
-        "content": "$2",
-        "example": "92873837267"
+        "content": "$1",
+        "example": "123456789"
+      }
+    }
+  },
+  "recognizedTaxIdFormat": {
+    "message": "Recognized format: $TYPE$",
+    "placeholders": {
+      "type": {
+        "content": "$1",
+        "example": "Canadian Business Number"
       }
     }
   },
@@ -16010,9 +16052,6 @@
   "blockClaimedDomainAccountCreation": {
     "message": "Götürülmüş domenlər üçün hesab yaradılmasını əngəllə"
   },
-  "blockClaimedDomainAccountCreationDesc": {
-    "message": "İstifadəçilərin, götürülmüş domenlərə aid e-poçt ünvanlarını istifadə edərək təşkilatınızın xaricində hesab yaratmasını önləyin."
-  },
   "blockClaimedDomainAccountCreationDescVfo1": {
     "message": "Prevent account creation from claimed domains.",
     "description": "VFO1 terminology variant of 'blockClaimedDomainAccountCreationDesc', shown in the policies list"
@@ -16023,9 +16062,6 @@
   "blockClaimedDomainAccountCreationDescV2Vfo1": {
     "message": "Block members from using your claimed domain to create Bitwarden accounts outside of your organization vault.",
     "description": "VFO1 terminology variant of 'blockClaimedDomainAccountCreationDescV2'"
-  },
-  "blockClaimedDomainAccountCreationPrerequisite": {
-    "message": "Bu siyasət aktivləşdirilməzdən əvvəl bir domen götürülməlidir."
   },
   "blockClaimedDomainAccountCreationPrerequisiteV2": {
     "message": "Bu siyasəti işə salmazdan əvvəl bir domen götürməlisiniz."
@@ -16147,6 +16183,18 @@
   },
   "recoveryStepFoldersTitle": {
     "message": "Qovluq tamlığı doğrulanır"
+  },
+  "recoveryStepAttachmentTitle": {
+    "message": "Verifying attachment integrity"
+  },
+  "recoveryStepAttachmentIssue": {
+    "message": "$COUNT$ item(s) have file attachments with old encryption. Open an item below and go to Attachments to fix it.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
   },
   "dataRecoveryTitle": {
     "message": "Veri geri qaytarma və diaqnostika"
@@ -16483,6 +16531,9 @@
   },
   "premiumSubscriptionCredit": {
     "message": "Premium abunəlik krediti"
+  },
+  "appliedSubscriptionCredits": {
+    "message": "Applied subscription credits"
   },
   "enterpriseMembership": {
     "message": "Enterprise üzvlüyü"

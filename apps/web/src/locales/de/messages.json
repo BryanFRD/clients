@@ -907,7 +907,7 @@
     "message": "Ordner bearbeiten"
   },
   "editFolderNamed": {
-    "message": "Edit $NAME$",
+    "message": "$NAME$ bearbeiten",
     "placeholders": {
       "name": {
         "content": "$1",
@@ -916,7 +916,7 @@
     }
   },
   "deleteFolderNamed": {
-    "message": "Delete $NAME$",
+    "message": "$NAME$ löschen",
     "placeholders": {
       "name": {
         "content": "$1",
@@ -1084,7 +1084,7 @@
     "message": "Alle Einträge"
   },
   "allVaultItems": {
-    "message": "All vault items"
+    "message": "Alle Tresor Elemente"
   },
   "favorites": {
     "message": "Favoriten"
@@ -1223,6 +1223,48 @@
   },
   "sharedFolders": {
     "message": "Geteilte Ordner"
+  },
+  "sharedFoldersInParent": {
+    "message": "Geteilter Ordner $NAME$",
+    "description": "Titles the grid of shared folders nested directly inside the shared folder being viewed.",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "Engineering"
+      }
+    }
+  },
+  "sharedFolderCount": {
+    "message": "$COUNT$ geteilte Ordner",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "16"
+      }
+    }
+  },
+  "sharedFolderSingular": {
+    "message": "$COUNT$ geteilter Ordner",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "moreSharedFoldersShownAbove": {
+    "message": "$COUNT$ weitere geteilte Ordner, die über diesem Button angezeigt werden",
+    "description": "Announced to screen readers when a collapsed grid of shared folders is expanded. The revealed shared folders render above the button that expanded them.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "moreSharedFoldersShownAboveSingular": {
+    "message": "1 weiterer geteilter Ordner, der über diesem Button angezeigt wird",
+    "description": "Announced to screen readers when a collapsed grid of shared folders is expanded. The revealed shared folders render above the button that expanded them."
   },
   "myFolder": {
     "message": "Mein Ordner"
@@ -2048,13 +2090,13 @@
     "message": "Ordner gelöscht"
   },
   "folderEdited": {
-    "message": "Folder edited"
+    "message": "Ordner bearbeitet."
   },
   "foldersDeleted": {
-    "message": "Folders deleted"
+    "message": "Ordner gelöscht"
   },
   "deleteFoldersCount": {
-    "message": "Delete $COUNT$ folders",
+    "message": "$COUNT$ Ordner löschen",
     "placeholders": {
       "count": {
         "content": "$1",
@@ -2063,7 +2105,7 @@
     }
   },
   "deleteFolderDescription": {
-    "message": "When you delete the $NAME$ folder, it will be removed from every item it's been applied to. The items themselves won't be deleted.",
+    "message": "Wenn Sie den $NAME$ Ordner löschen, wird er aus jedem Element entfernt, auf den er angewendet wurde. Die Elemente selbst werden nicht gelöscht.",
     "placeholders": {
       "name": {
         "content": "$1",
@@ -2072,10 +2114,10 @@
     }
   },
   "deleteFoldersDescription": {
-    "message": "When you delete these folders, they will be removed from every item they've been applied to. The items themselves won't be deleted."
+    "message": "Wenn Sie diese Ordner löschen, werden sie aus jedem Element entfernt, auf den sie angewendet wurden. Die Elemente selbst werden nicht gelöscht."
   },
   "enterAName": {
-    "message": "Enter a name."
+    "message": "Name eingeben."
   },
   "editInfo": {
     "message": "Informationen bearbeiten"
@@ -3736,9 +3778,6 @@
   },
   "restrictedItemTypePolicy": {
     "message": "Karten-Eintragstyp entfernen"
-  },
-  "restrictedItemTypePolicyDesc": {
-    "message": "Mitgliedern nicht erlauben, Karten-Eintragstypen zu erstellen. Vorhandene Karten werden automatisch entfernt."
   },
   "restrictedItemTypePolicyDescV2": {
     "message": "Mitgliedern nicht erlauben, Kreditkarten-Einträge in ihren Tresoren anzulegen und zu speichern. Wenn diese Richtlinie aktiviert ist, werden vorhandene Karten automatisch ausgeblendet."
@@ -6793,8 +6832,8 @@
   "openOrgInviteAcceptFailed": {
     "message": "Die Einladung kann nicht angenommen werden. Bitte einen Organisations-Administrator, dir einen neuen Einladungslink zu senden."
   },
-  "openOrgInviteAcceptFailedTitle": {
-    "message": "Die Einladung kann nicht angenommen werden"
+  "cannotAcceptInvitation": {
+    "message": "Cannot accept invitation"
   },
   "openOrgInviteAcceptAlreadyMember": {
     "message": "Du bist bereits Mitglied dieser Organisation."
@@ -7369,6 +7408,21 @@
       }
     }
   },
+  "ssoStagedOrgUserDirectInviteEmailSent": {
+    "message": "Check your email to finish joining $ORGANIZATION_NAME$.",
+    "placeholders": {
+      "organization_name": {
+        "content": "$1",
+        "example": "Acme Inc"
+      }
+    }
+  },
+  "ssoNoSeatsAvailableMessage": {
+    "message": "This organization is not able to accept new members at the moment. Contact your admin for assistance."
+  },
+  "inviteSentToEmail": {
+    "message": "Invite sent to email"
+  },
   "acceptPolicies": {
     "message": "Durch Anwählen dieses Kästchens erklärst du dich mit Folgendem einverstanden:"
   },
@@ -7638,17 +7692,11 @@
   "twoStepLoginPolicyDescV2": {
     "message": "Von Mitgliedern verlangen, die Zwei-Faktor-Authentifizierung einzurichten. Diese Richtlinie gilt nicht für Eigentümer und Administratoren."
   },
-  "twoStepLoginPolicyWarning": {
-    "message": "Organisationsmitglieder, die keine Zwei-Faktor-Authentifizierung für ihr persönliches Konto aktiviert haben, werden aus der Organisation entfernt und erhalten eine E-Mail, die sie über die Änderung benachrichtigt."
-  },
   "twoStepLoginPolicyWarningV2": {
     "message": "Durch die Aktivierung dieser Richtlinie werden alle Benutzer widerrufen, bei denen die Zwei-Faktor-Authentifizierung für ihr Konto nicht aktiviert ist. Die betroffenen Benutzer werden per E-Mail benachrichtigt."
   },
   "twoStepLoginPolicyUserWarning": {
     "message": "Du bist Mitglied einer Organisation, die eine Zwei-Faktor-Authentifizierung für dein Benutzerkonto verlangt. Wenn du alle Zwei-Faktor-Authentifizierungsanbieter deaktivierst, wirst du automatisch aus diesen Organisationen entfernt."
-  },
-  "passwordGeneratorPolicyDesc": {
-    "message": "Mindestanforderungen für den Passwort-Generator festlegen."
   },
   "passwordGeneratorPolicyDescV2": {
     "message": "Lege eine Reihe von Mindestanforderungen für alle von Mitgliedern generierten Passwörter fest."
@@ -7912,9 +7960,6 @@
   "singleOrgDesc": {
     "message": "Benutzern verbieten, anderen Organisationen beizutreten."
   },
-  "singleOrgPolicyDesc": {
-    "message": "Verbiete Mitgliedern den Beitritt zu anderen Organisationen. Diese Richtlinie ist für Organisationen erforderlich, die die Domain-Verifizierung aktiviert haben."
-  },
   "singleOrgPolicyDescVfo1": {
     "message": "Restrict members from joining other shared or organization vaults.",
     "description": "VFO1 terminology variant of 'singleOrgPolicyDesc'"
@@ -7947,9 +7992,6 @@
     "message": "Require members to log in with the Enterprise Single Sign-On method. This policy won't be enforced for owners and admins.",
     "description": "VFO1 terminology variant of 'requireSsoPolicyDescV2', shown in the policy edit drawer"
   },
-  "requireSsoPolicyDesc": {
-    "message": "Mitglieder müssen sich per Enterprise Single-Sign-on anmelden."
-  },
   "requireSsoPolicyTitle": {
     "message": "Single Sign-On (SSO) verlangen"
   },
@@ -7958,9 +8000,6 @@
   },
   "prerequisite": {
     "message": "Voraussetzung"
-  },
-  "requireSsoPolicyReq": {
-    "message": "Die Unternehmensrichtlinie für eine einzelne Organisation muss aktiviert sein, bevor diese Richtlinie aktiviert werden kann."
   },
   "requireSsoPolicyReqV2": {
     "message": "Du musst die Richtlinie für eine einzelne Organisation aktivieren, bevor du diese Richtlinie aktivieren kannst."
@@ -8379,9 +8418,6 @@
   "centralizeDataOwnershipBenefit2": {
     "message": "Übertrage Einträge bei Austritt und Ablösung von Mitgliedern ganz einfach und sorge dafür, dass keine Zugriffslücken entstehen."
   },
-  "centralizeDataOwnershipBenefit3": {
-    "message": "Stelle allen Benutzern einen eigenen \"Meine Einträge\"-Bereich für die Verwaltung ihrer eigenen Zugangsdaten zur Verfügung."
-  },
   "centralizeDataOwnershipWarningTitle": {
     "message": "Mitglieder auffordern, ihre Einträge zu übertragen"
   },
@@ -8390,9 +8426,6 @@
   },
   "centralizeDataOwnershipWarningLink": {
     "message": "Erfahre mehr über die Übertragung"
-  },
-  "promptUsersToMoveItems": {
-    "message": "Benutzer auffordern, einzelne Tresoreinträge in die Organisation zu verschieben"
   },
   "promptUsersToMoveItemsCallout": {
     "message": "Mitglieder werden aufgefordert, ihre Einträge entweder an die Organisation zu übertragen oder sie zu verlassen. Wenn sie gehen, wird ihr Zugang deaktiviert, kann aber jederzeit wiederhergestellt werden."
@@ -8605,10 +8638,6 @@
   "desktopAutotypePolicyTitleV2": {
     "message": "Desktop-Autotype-Standard­einstellung"
   },
-  "desktopAutotypePolicyDesc": {
-    "message": "Aktiviere Desktop-Autotype standardmäßig für Mitglieder. Mitglieder können Autotype im Desktop-Client manuell deaktivieren.",
-    "description": "This policy will enable Desktop Autotype by default for members on Unlock."
-  },
   "desktopAutotypePolicyDescV2": {
     "message": "Desktop-Autotype für Mitglieder aktivieren. Mitglieder können Autotype manuell im Desktop-Client deaktivieren."
   },
@@ -8694,9 +8723,6 @@
   "uriMatchDetectionPolicy": {
     "message": "Standard URI-Übereinstimmungserkennung"
   },
-  "uriMatchDetectionPolicyDesc": {
-    "message": "Lege fest, wann Zugangsdaten für Auto-Ausfüllen vorgeschlagen werden. Administratoren und Eigentümer sind von dieser Richtlinie ausgenommen."
-  },
   "uriMatchDetectionPolicyDescVfo1": {
     "message": "Set the default URI match detection for all items created by members.",
     "description": "VFO1 terminology variant of 'uriMatchDetectionPolicyDesc', shown in the policies list"
@@ -8710,6 +8736,23 @@
   "invalidUriMatchDefaultPolicySetting": {
     "message": "Bitte wähle eine gültige URI-Übereinstimmungserkennungs-Option aus.",
     "description": "Error message displayed when a user attempts to save URI match detection policy settings with an invalid selection."
+  },
+  "fillAssistPolicy": {
+    "message": "Activate fill assist",
+    "description": "'Fill assist' is a Bitwarden feature name; do not translate."
+  },
+  "fillAssistPolicyDesc": {
+    "message": "Turn on fill assist by default for all members. This feature uses reviewed, site-specific instructions to improve autofill accuracy on websites known to be difficult to autofill."
+  },
+  "fillAssistRulesUrl": {
+    "message": "Custom autofill rule set"
+  },
+  "fillAssistRulesUrlHint": {
+    "message": "By default, fill assist uses Bitwarden's curated rule set. Enter a URL here to override it with your own."
+  },
+  "invalidFillAssistRulesUrl": {
+    "message": "Enter a valid URL",
+    "description": "Error message displayed when a user attempts to save the fill assist policy with an invalid or missing rules URL."
   },
   "modifiedPolicyId": {
     "message": "Richtlinie $ID$ geändert.",
@@ -8725,6 +8768,9 @@
   },
   "estimatedTax": {
     "message": "Voraussichtliche Steuern"
+  },
+  "subtotal": {
+    "message": "Subtotal"
   },
   "custom": {
     "message": "Benutzerdefiniert"
@@ -9493,9 +9539,6 @@
   "automaticAppLoginWithSSO": {
     "message": "Automatische Anmeldung mit SSO"
   },
-  "automaticAppLoginWithSSODesc": {
-    "message": "Erweitere die Sicherheit und den Komfort von SSO auf nicht verwaltete Anwendungen. Wenn Benutzer eine Anwendung über Ihren Identitätsanbieter starten, werden deren Anmeldedaten automatisch ausgefüllt und übermittelt, sodass ein sicherer Ablauf mit nur einem Klick vom Identitätsanbieter zur Anwendung entsteht."
-  },
   "automaticAppLoginWithSSODescV2": {
     "message": "Wenn Benutzer eine App über deinen Identitätsanbieter starten, werden ihre Zugangsdaten automatisch ausgefüllt und übermittelt, sodass eine sichere Anmeldung mit nur einem Klick möglich ist."
   },
@@ -9630,9 +9673,6 @@
   },
   "disableExport": {
     "message": "Export entfernen"
-  },
-  "disablePersonalVaultExportDescription": {
-    "message": "Mitgliedern nicht erlauben, Daten aus ihrem persönlichen Tresor zu exportieren."
   },
   "disablePersonalVaultExportDescriptionV2": {
     "message": "Mitgliedern nicht erlauben, Daten aus ihren persönlichen Tresoren zu exportieren. Diese Richtlinie gilt nicht für Eigentümer und Administratoren."
@@ -14848,9 +14888,6 @@
     "message": "Remove Sponsored Families Plan",
     "description": "VFO1 terminology variant of 'freeFamiliesSponsorshipPolicyTitleV2', shown in the drawer title"
   },
-  "freeFamiliesSponsorshipPolicyDesc": {
-    "message": "Erlaube Mitgliedern nicht, einen Families-Tarif über diese Organisation einzulösen."
-  },
   "freeFamiliesSponsorshipPolicyDescV2": {
     "message": "Erlaube Mitgliedern nicht, einen von deiner Organisation gesponserten Families-Tarif in Anspruch zu nehmen."
   },
@@ -15308,9 +15345,6 @@
   "removeUnlockWithPinPolicyTitle": {
     "message": "Entsperren mit PIN entfernen"
   },
-  "removeUnlockWithPinPolicyDesc": {
-    "message": "Mitgliedern nicht erlauben, ihr Konto mit einer PIN zu entsperren."
-  },
   "removeUnlockWithPinPolicyDescV2": {
     "message": "Mitglieder dürfen ihr Konto nicht mit einer PIN entsperren."
   },
@@ -15698,6 +15732,9 @@
   "providersubCanceledmessage": {
     "message": "Kontaktiere den Bitwarden Kundensupport, um erneut zu abonnieren."
   },
+  "showAll": {
+    "message": "Alle anzeigen"
+  },
   "showMore": {
     "message": "Mehr anzeigen"
   },
@@ -15745,16 +15782,21 @@
   "checkInputFormat": {
     "message": "Überprüfe das Eingabeformat auf Tippfehler."
   },
-  "exampleTaxIdFormat": {
-    "message": "Beispiel $CODE$-Format: $EXAMPLE$",
+  "taxIdFormatExample": {
+    "message": "Example tax ID format: $EXAMPLE$",
     "placeholders": {
-      "code": {
-        "content": "$1",
-        "example": "ABN"
-      },
       "example": {
-        "content": "$2",
-        "example": "92873837267"
+        "content": "$1",
+        "example": "123456789"
+      }
+    }
+  },
+  "recognizedTaxIdFormat": {
+    "message": "Recognized format: $TYPE$",
+    "placeholders": {
+      "type": {
+        "content": "$1",
+        "example": "Canadian Business Number"
       }
     }
   },
@@ -16010,9 +16052,6 @@
   "blockClaimedDomainAccountCreation": {
     "message": "Erstellung von Konten für beanspruchte Domains blockieren"
   },
-  "blockClaimedDomainAccountCreationDesc": {
-    "message": "Verhindere, dass Benutzer außerhalb deiner Organisation Konten mit E-Mail-Adressen aus beanspruchten Domains erstellen."
-  },
   "blockClaimedDomainAccountCreationDescVfo1": {
     "message": "Prevent account creation from claimed domains.",
     "description": "VFO1 terminology variant of 'blockClaimedDomainAccountCreationDesc', shown in the policies list"
@@ -16023,9 +16062,6 @@
   "blockClaimedDomainAccountCreationDescV2Vfo1": {
     "message": "Block members from using your claimed domain to create Bitwarden accounts outside of your organization vault.",
     "description": "VFO1 terminology variant of 'blockClaimedDomainAccountCreationDescV2'"
-  },
-  "blockClaimedDomainAccountCreationPrerequisite": {
-    "message": "Vor der Aktivierung dieser Richtlinie muss eine Domain beansprucht werden."
   },
   "blockClaimedDomainAccountCreationPrerequisiteV2": {
     "message": "Bevor du diese Richtlinie aktivierst, musst du eine Domain beanspruchen."
@@ -16147,6 +16183,18 @@
   },
   "recoveryStepFoldersTitle": {
     "message": "Ordnerintegrität wird verifiziert"
+  },
+  "recoveryStepAttachmentTitle": {
+    "message": "Verifying attachment integrity"
+  },
+  "recoveryStepAttachmentIssue": {
+    "message": "$COUNT$ item(s) have file attachments with old encryption. Open an item below and go to Attachments to fix it.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
   },
   "dataRecoveryTitle": {
     "message": "Datenwiederherstellung und Diagnose"
@@ -16483,6 +16531,9 @@
   },
   "premiumSubscriptionCredit": {
     "message": "Premium-Abonnement-Guthaben"
+  },
+  "appliedSubscriptionCredits": {
+    "message": "Applied subscription credits"
   },
   "enterpriseMembership": {
     "message": "Enterprise-Mitgliedschaft"
