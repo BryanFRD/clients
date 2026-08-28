@@ -2304,10 +2304,10 @@
     "message": "No matching items"
   },
   "selected": {
-    "message": "Selected"
+    "message": "Zaznaczono"
   },
   "selectedLowercase": {
-    "message": "selected",
+    "message": "zaznaczono",
     "description": "Lowercase 'selected' used inline after a count in the bulk-actions bar, e.g. '4 selected'."
   },
   "bulkActionsBar": {
@@ -5683,7 +5683,7 @@
     }
   },
   "archiveItemTitle": {
-    "message": "Archive item",
+    "message": "Archiwizuj element",
     "description": "Title of the archive items dialog when a single item is selected"
   },
   "archiveItemsPluralDescription": {
@@ -6288,7 +6288,7 @@
     }
   },
   "addToFolder": {
-    "message": "Add to folder"
+    "message": "Dodaj do folderu"
   },
   "deleteCollection": {
     "message": "Delete collection"

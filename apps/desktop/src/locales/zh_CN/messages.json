@@ -1669,7 +1669,7 @@
     "message": "自托管环境"
   },
   "selfHostedBaseUrlHint": {
-    "message": "指定您的本地托管 Bitwarden 安装的基础 URL。例如：https://bitwarden.company.com"
+    "message": "指定您的本地托管 Bitwarden 安装的基础 URL。示例：https://bitwarden.company.com"
   },
   "selfHostedCustomEnvHeader": {
     "message": "对于高级配置，您可以单独指定每个服务的基础 URL。"
@@ -3471,7 +3471,7 @@
     "message": "没有共享文件夹"
   },
   "filterByName": {
-    "message": "筛选为 $NAME$",
+    "message": "按 $NAME$ 筛选",
     "placeholders": {
       "name": {
         "content": "$1",
@@ -5177,13 +5177,13 @@
     "description": "Deprecated; we shouldn't use a question mark. Use passkeyLogin2 instead."
   },
   "passkeyLogin2": {
-    "message": "Log in with passkey"
+    "message": "使用通行密钥登录"
   },
   "savePasskeyQuestion": {
     "message": "保存通行密钥吗？"
   },
   "savePasskey": {
-    "message": "Save passkey"
+    "message": "保存通行密钥"
   },
   "saveNewPasskey": {
     "message": "保存为新的登录"
@@ -5199,7 +5199,7 @@
     "description": "Deprecated; we shouldn't use a question mark. Use overwritePasskey2 instead."
   },
   "overwritePasskey2": {
-    "message": "Overwrite passkey"
+    "message": "覆盖通行密钥"
   },
   "unableToSavePasskey": {
     "message": "无法保存通行密钥"

@@ -6,7 +6,7 @@
     "message": "フィルター"
   },
   "allItems": {
-    "message": "全てのアイテム"
+    "message": "すべてのアイテム"
   },
   "favorites": {
     "message": "お気に入り"
@@ -4505,7 +4505,7 @@
     "message": "ファイルが選択されていません"
   },
   "noFileSelected": {
-    "message": "No file selected"
+    "message": "ファイルが選択されていません"
   },
   "fileChosen": {
     "message": "File chosen: $FILE_NAME$",
