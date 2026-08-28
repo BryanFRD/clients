@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Додаткові налаштування"
   },
-  "fillAssistActiveNotice": {
-    "message": "Автозаповнення використовує Fill Assist на цій сторінці."
+  "fillAssistActiveNoticeV2": {
+    "message": "Автозаповнення використовує помічник із заповнення на цій сторінці."
   },
-  "activateFillAssist": {
-    "message": "Увімкнути функцію «Помічник заповнення»"
+  "activateFillAssistV2": {
+    "message": "Увімкнути помічник із заповнення"
   },
-  "activateFillAssistDescription": {
-    "message": "Функція «Fill Assist» підвищує точність автозаповнення на підтримуваних сайтах завдяки застосуванню правил, специфічних для кожного сайту. Під час використання цієї функції дані не збираються та не зберігаються."
+  "activateFillAssistDescriptionV2": {
+    "message": "Функція «Допомога при заповненні» підвищує точність автозаповнення на підтримуваних сайтах завдяки застосуванню правил, специфічних для кожного сайту. Під час використання цієї функції дані не збираються та не зберігаються."
   },
-  "aboutFillAssistLabel": {
-    "message": "Про Fill Assist"
+  "aboutFillAssistLabelV2": {
+    "message": "Про помічника із заповнення"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Allow websites to exclude fields to autofill"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Skip fields that a website marks with the `data-bwignore` attribute."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Allow websites to add fields to autofill"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Use any span elements that a website marks with the `data-bwautofill` attribute."
   },
   "enableContextMenuItem": {
     "message": "Показувати в контекстному меню"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Не знайдено токен оновлення або ключі API. Спробуйте вийти, а потім увійти знову."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Перевірка синхронізації на комп'ютері"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Перевірте, чи програма на комп'ютері показує цю фразу відбитка: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "Інтеграцію з браузером не налаштовано"
@@ -5287,58 +5293,58 @@
     "message": "Відкрийте настільну програму RememBear і перейдіть до \"Налаштування\" → \"Обліковий запис\" → \"Експорт\". Введіть головний пароль і натисніть кнопку \"Експортувати все одно\", щоб зберегти файл у форматі CSV."
   },
   "importPasswordwalletInstructions": {
-    "message": "Open the PasswordWallet desktop application and navigate to \"File\" → \"Export\" → \"Visible entries to text file\". Enter your password and select the \"Ok\" button to save the TXT file."
+    "message": "Відкрийте настільну програму PasswordWallet і перейдіть до меню \"Файл\" → \"Експорт\" → \"Видимі записи у текстовий файл\". Введіть пароль і натисніть кнопку \"ОК\", щоб зберегти файл у форматі TXT."
   },
   "importMykiInstructions": {
-    "message": "Open the Myki desktop browser extension and navigate to \"Advanced\" → \"Export Accounts\" and then scan the QR code with your mobile device. Various CSV files will then be saved to your computer's downloads folder."
+    "message": "Відкрийте розширення для браузера Myki на комп’ютері, перейдіть у розділ \"Додаткові налаштування\" → \"Експортувати облікові записи\", а потім проскануйте QR-код за допомогою мобільного пристрою. Після цього у теці \"Завантаження\" на вашому комп’ютері будуть збережені різні файли у форматі CSV."
   },
   "importSecuresafeInstructions": {
-    "message": "Export your SecureSafe password safe to a CSV file with a comma delimiter."
+    "message": "Експортуйте свій сейф паролів SecureSafe у файл CSV із роздільником у вигляді коми."
   },
   "importLogmeonceInstructions": {
-    "message": "Open the LogMeOnce browser extension, then navigate to \"Open Menu\" → \"Export To\" and select \"CSV File\" to save the CSV file."
+    "message": "Відкрийте розширення для браузера LogMeOnce, потім перейдіть до \"Відкрити меню\" → \"Експортувати в\" і виберіть \"Файл CSV\", щоб зберегти файл у форматі CSV."
   },
   "importBlackberryInstructions": {
-    "message": "Open the BlackBerry Password Keeper application, then navigate to \"Settings\" → \"Import/Export\". Select \"Export Passwords\" and follow the instructions on screen to save the unencrypted CSV file."
+    "message": "Відкрийте програму BlackBerry Password Keeper, а потім перейдіть до \"Налаштування\" → \"Імпорт/Експорт\". Виберіть \"Експортувати паролі\" та дотримуйтесь інструкцій на екрані, щоб зберегти незашифрований файл у форматі CSV."
   },
   "importButtercupInstructions": {
-    "message": "Open the Buttercup desktop application and unlock your vault. Right click on your vault's icon and select \"Export\" to save the CSV file."
+    "message": "Відкрийте настільну програму Buttercup і розблокуйте своє сховище. Клацніть правою кнопкою миші на піктограмі сховища та виберіть \"Експортувати\", щоб зберегти файл у форматі CSV."
   },
   "importCodebookInstructions": {
-    "message": "Open the Codebook desktop application and log in. Navigate to \"File\" → \"Export all\", then click \"Yes\" on the dialog and save the CSV file."
+    "message": "Відкрийте настільну програму Codebook і увійдіть у систему. Перейдіть до меню \"Файл\" → \"Експортувати все\", потім у діалоговому вікні натисніть \"Так\"» і збережіть файл у форматі CSV."
   },
   "importEncryptrInstructions": {
-    "message": "Open the newest version of the Encryptr desktop application and allow all of your data to sync. Once syncing of your data is complete, the download icon in the top right corner will turn pink. Click the download icon and save the CSV file."
+    "message": "Відкрийте найновішу версію настільної програми Encryptr і дозвольте синхронізувати всі ваші дані. Після завершення синхронізації даних піктограма завантаження у верхньому правому куті стане рожевою. Клацніть на піктограму завантаження та збережіть файл у форматі CSV."
   },
   "importYotiInstructions": {
-    "message": "From the Yoti browser extension, click on \"Settings\", then \"Export Saved Logins\" and save the CSV file."
+    "message": "У розширенні для браузера Yoti натисніть \"Налаштування\", потім \"Експортувати збережені дані для входу\" та збережіть файл у форматі CSV."
   },
   "importPsonoInstructions": {
-    "message": "Log in to the Psono web vault, click on the \"Signed in as\"-dropdown, select \"Others\". Go to the \"Export\"-tab and select the json type export and then click on Export."
+    "message": "Увійдіть у вебсховище Psono, натисніть на спадне меню \"Увійшли як\", виберіть \"Інші\". Перейдіть на вкладку \"Експорт\", виберіть експорт у форматі JSON, а потім натисніть \"Експорт\"."
   },
   "importPasskyInstructions": {
-    "message": "Log in to \"https://vault.passky.org\" → \"Import & Export\" → \"Export\" in the Passky section. (\"Backup\" is unsupported as it is encrypted)."
+    "message": "Увійдіть у розділ \"https://vault.passky.org\" → \"Імпорт та експорт\" → \"Експорт\" у розділі Passky. (Функція \"Резервне копіювання\" не підтримується, оскільки дані зашифровані)."
   },
   "importProtonpassInstructions": {
-    "message": "In the ProtonPass browser extension, go to Settings > Export. Export without PGP encryption and save the zip file."
+    "message": "У розширенні для браузера ProtonPass перейдіть у меню \"Налаштування\" > \"Експорт\". Здійсніть експорт без шифрування PGP і збережіть файл у форматі zip."
   },
   "importPasswordxpInstructions": {
-    "message": "Select Database → Export to file... menu. → Within the export options, ensure Folder names and Column titles is checked. → Press Browse... button and choose the target file and set its type to CSV file."
+    "message": "Виберіть пункт меню \"База даних\" → \"Експортувати у файл...\". → У налаштуваннях експорту переконайтеся, що встановлено прапорець \"Назви тек та заголовки стовпців\". → Натисніть кнопку \"Огляд...\", виберіть файл призначення та вкажіть його тип як \"CSV-файл\"."
   },
   "importNetwrixInstructions": {
-    "message": "Open the FullClient, go to the Main Menu and select Export. Start the export passwords wizard and follow the instructions to export a CSV file."
+    "message": "Відкрийте FullClient, перейдіть до головного меню та виберіть пункт \"Експорт\". Запустіть майстер експорту паролів і дотримуйтесь інструкцій, щоб експортувати файл у форматі CSV."
   },
   "importNordpassInstructions": {
-    "message": "Log in to NordPass and open Settings → Scroll down to the Import and Export section and select Export items → Enter your Master Password and select Continue. → Save the CSV file on your device."
+    "message": "Увійдіть у NordPass і відкрийте \"Налаштування\" → Прокрутіть вниз до розділу \"Імпорт та експорт\" і виберіть \"Експортувати елементи\" → Введіть головний пароль і натисніть \"Продовжити\" → Збережіть файл CSV на своєму пристрої."
   },
   "importPassworddepot17Instructions": {
-    "message": "On the desktop application, go to Tools → Export → Enter your master password → Select XML Format (*.xml) as Export format → Click on next → Choose which entries should be included in the export → Click on next to export into the location previously chosen."
+    "message": "У настільній програмі перейдіть до меню \"Інструменти\" → \"Експорт\" → Введіть головний пароль → Виберіть формат XML (*.xml) як формат експорту → Натисніть \"Далі\" → Виберіть, які записи слід включити в експорт → Натисніть \"Далі\", щоб експортувати дані у раніше обране місце."
   },
   "importDelineaInstructions": {
-    "message": "Log in to Delinea, search for “Import/Export” -> select “Export” -> Select “XML” as Export format -> Select “QuantumLock” as Authenticator type -> enter your password and select “Export” to save the XML file."
+    "message": "Увійдіть у Delinea, знайдіть пункт \"Імпорт/Експорт\" -> виберіть \"Експорт\" -> виберіть \"XML\" як формат експорту -> виберіть \"QuantumLock\" як тип автентифікатора -> введіть свій пароль і натисніть \"Експорт\", щоб зберегти XML-файл."
   },
   "importDelineaCsvInstructions": {
-    "message": "Log in to Delinea, search for “Import/Export” -> select “Export” -> Select “CSV” as Export format -> Select “QuantumLock” as Authenticator type -> enter your password and select “Export” to save the CSV file."
+    "message": "Увійдіть у Delinea, знайдіть пункт \"Імпорт/Експорт\" -> виберіть \"Експорт\" -> виберіть \"CSV\" як формат експорту -> виберіть \"QuantumLock\" як тип автентифікатора -> введіть свій пароль і натисніть \"Експорт\", щоб зберегти CSV-файл."
   },
   "confirmVaultImport": {
     "message": "Підтвердити імпорт сховища"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Оновіть свою комп'ютерну програму"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "Щоб використовувати біометричне розблокування, оновіть комп'ютерну програму, або вимкніть розблокування відбитком пальця в налаштуваннях системи."
-  },
   "changeAtRiskPassword": {
     "message": "Змінити ризикований пароль"
   },
@@ -7889,9 +7889,32 @@
     "message": "Визначено ризики",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Оновіть, щоб переглянути паролі"
+  },
   "categoryHealthy": {
     "message": "Немає потреби в записах",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Сканування вашого сховища",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Перевірка викритих, слабких та повторно використаних паролів.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "В процесі",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Щось пішло не так",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Ваше сканування сховища не завершено через неочікувану помилку.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Викриті паролі"

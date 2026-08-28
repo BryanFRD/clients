@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Papildu iespējas"
   },
-  "fillAssistActiveNotice": {
-    "message": "Autofill is using Fill Assist on this page."
+  "fillAssistActiveNoticeV2": {
+    "message": "Autofill is using fill assist on this page."
   },
-  "activateFillAssist": {
-    "message": "Ieslēgt aizpildes palīgu"
+  "activateFillAssistV2": {
+    "message": "Turn on fill assist"
   },
-  "activateFillAssistDescription": {
-    "message": "Fill Assist improves autofill accuracy on supported sites by using site specific rules. No data is collected or saved when you use this feature."
+  "activateFillAssistDescriptionV2": {
+    "message": "Fill assist improves autofill accuracy on supported sites by using site specific rules. No data is collected or saved when you use this feature."
   },
-  "aboutFillAssistLabel": {
-    "message": "Par aizpildes palīgu"
+  "aboutFillAssistLabelV2": {
+    "message": "About fill assist"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Allow websites to exclude fields to autofill"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Skip fields that a website marks with the `data-bwignore` attribute."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Allow websites to add fields to autofill"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Use any span elements that a website marks with the `data-bwautofill` attribute."
   },
   "enableContextMenuItem": {
     "message": "Rādīt konteksta izvēlnes iespējas"
@@ -2265,13 +2277,13 @@
     "message": "Copy nationality"
   },
   "issuingCountry": {
-    "message": "Issuing country"
+    "message": "Izdevējvalsts"
   },
   "copyIssuingCountry": {
     "message": "Copy issuing country"
   },
   "passportType": {
-    "message": "Passport type"
+    "message": "Pases veids"
   },
   "copyPassportType": {
     "message": "Copy passport type"
@@ -2280,13 +2292,13 @@
     "message": "National identification number"
   },
   "issuingAuthority": {
-    "message": "Issuing authority"
+    "message": "Izdevējiestāde"
   },
   "copyIssuingAuthority": {
     "message": "Copy issuing authority / office"
   },
   "issueDate": {
-    "message": "Issue date"
+    "message": "Izdošanas datums"
   },
   "licenseNumber": {
     "message": "Autovadītāja apliecības numurs"
@@ -2346,7 +2358,7 @@
     "message": "SSH atslēga"
   },
   "bankAccount": {
-    "message": "Bank account"
+    "message": "Bankas konts"
   },
   "bankAccountDetails": {
     "message": "Informācija par bankas kontu"
@@ -2355,7 +2367,7 @@
     "message": "Piezīme"
   },
   "typeBankAccount": {
-    "message": "Bank account"
+    "message": "Bankas konts"
   },
   "typeLoginSubtitle": {
     "message": "Website or app"
@@ -2382,10 +2394,10 @@
     "message": "Banking details"
   },
   "typePassport": {
-    "message": "Passport"
+    "message": "Pase"
   },
   "passportDetails": {
-    "message": "Passport details"
+    "message": "Pases informācija"
   },
   "passportAdded": {
     "message": "Passport added"
@@ -2400,7 +2412,7 @@
     "message": "Autovadītāja apliecība vai ID"
   },
   "driversLicenseDetails": {
-    "message": "License details"
+    "message": "Informācija par licenci"
   },
   "issuingState": {
     "message": "Issuing state / province"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Netika atrastas atsvaidzināšanas pilnvaras vai API atslēgas. Lūgums mēģināt izrakstīties un atkal pieteikties."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Darbvirsmas sinhronizēšanas apliecinājums"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Lūgumus pārliecināties, ka darbvirsmas lietotne rāda šo atpazīšanas vārdkopu:"
   },
   "desktopIntegrationDisabledTitle": {
     "message": "Savienojums ar pārlūku nav iespējots"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Lūgums atjaunināt darbvirsmas lietotni"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "Lai izmantotu atslēgšanu ar biometriju, lūgums atjaunināt darbvirsmas lietotni vai atspējot atslēgšanu ar pirkstu nospiedumu darbvirsmas iestatījumos."
-  },
   "changeAtRiskPassword": {
     "message": "Mainīt riskam pakļautu paroli"
   },
@@ -7889,9 +7889,32 @@
     "message": "Noteiktās bīstamības",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Upgrade to view passwords"
+  },
   "categoryHealthy": {
     "message": "Nevienam vienumam nav jāpievērš uzmanība",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Nolasa glabātavu",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Pārbauda noplūdušas, vājas un atkārtoti izmantotas paroles.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "Izpildē",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Kaut kas nogājis greizi",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Glabātavas nolasīšana netika pabaigta neparedzētas kļlūdas dēļ.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Atklātās paroles"

@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "گزینه‌های اضافی"
   },
-  "fillAssistActiveNotice": {
-    "message": "پر کردن خودکار در این صفحه از دستیار پر کردن استفاده می‌کند."
+  "fillAssistActiveNoticeV2": {
+    "message": "Autofill is using fill assist on this page."
   },
-  "activateFillAssist": {
-    "message": "دستیار پر کردن را روشن کن"
+  "activateFillAssistV2": {
+    "message": "Turn on fill assist"
   },
-  "activateFillAssistDescription": {
-    "message": "کمک به پر کردن فرم‌ها با استفاده از قوانین خاص سایت، دقت پر کردن خودکار فرم‌ها را در سایت‌های پشتیبانی شده بهبود می‌بخشد. هنگام استفاده از این ویژگی، هیچ داده‌ای جمع‌آوری یا ذخیره نمی‌شود."
+  "activateFillAssistDescriptionV2": {
+    "message": "Fill assist improves autofill accuracy on supported sites by using site specific rules. No data is collected or saved when you use this feature."
   },
-  "aboutFillAssistLabel": {
-    "message": "درباره کمک پرکننده"
+  "aboutFillAssistLabelV2": {
+    "message": "About fill assist"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Allow websites to exclude fields to autofill"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Skip fields that a website marks with the `data-bwignore` attribute."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Allow websites to add fields to autofill"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Use any span elements that a website marks with the `data-bwautofill` attribute."
   },
   "enableContextMenuItem": {
     "message": "نمایش گزینه‌های منوی زمینه"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "هیچ توکن به‌روزرسانی یا کلید API یافت نشد. لطفاً از حساب کاربری خود خارج شده و دوباره وارد شوید."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "تأیید همگام‌سازی رایانه رومیزی"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "لطفاً تأیید کنید که برنامه رایانه رومیزی این اثر انگشت را نشان می‌دهد: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "ادغام مرورگر فعال نیست"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "لطفاً برنامه رایانه رومیزی خود را به‌روزرسانی کنید"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "برای استفاده از باز کردن قفل با بیومتریک، لطفاً برنامه رایانه رومیزی خود را به‌روزرسانی کنید یا باز کردن قفل با اثر انگشت را در تنظیمات رایانه رومیزی غیرفعال کنید."
-  },
   "changeAtRiskPassword": {
     "message": "تغییر کلمه عبور در معرض خطر"
   },
@@ -7889,9 +7889,32 @@
     "message": "خطرات شناسایی شده",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Upgrade to view passwords"
+  },
   "categoryHealthy": {
     "message": "هیچ موردی نیاز به توجه ندارد",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Scanning your vault",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Checking for exposed, weak, and reused passwords.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "In progress",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Something went wrong",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Your vault scan didn't complete due to an unexpected error.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Exposed passwords"

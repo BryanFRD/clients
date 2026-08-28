@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Ďalšie možnosti"
   },
-  "fillAssistActiveNotice": {
+  "fillAssistActiveNoticeV2": {
     "message": "Automatické vypĺňanie na tejto stránke využíva pomoc pri vypĺňaní."
   },
-  "activateFillAssist": {
+  "activateFillAssistV2": {
     "message": "Zapnúť pomoc pri vypĺňaní"
   },
-  "activateFillAssistDescription": {
+  "activateFillAssistDescriptionV2": {
     "message": "Pomoc pri vypĺňaní zvyšuje presnosť automatického vypĺňania na podporovaných stránkach pomocou pravidiel špecifických pre danú stránku. Pri používaní tejto funkcie sa nezhromažďujú ani neukladajú žiadne údaje."
   },
-  "aboutFillAssistLabel": {
+  "aboutFillAssistLabelV2": {
     "message": "Info o pomoci pri vypĺňaní"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Povoliť webovým stránkam vylúčiť polia z automatického vypĺňania"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Preskočiť polia, ktoré webová stránka označuje atribútom `data-bwignore`."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Povoliť webovým stránkam pridávať polia na automatické vypĺňanie"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Použiť všetky prvky typu span, ktoré webová stránka označuje atribútom `data-bwautofill`."
   },
   "enableContextMenuItem": {
     "message": "Zobraziť možnosti kontextovej ponuky"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Nenašiel sa žiadny token obnovenia ani kľúče API. Skúste sa odhlásiť a znova prihlásiť."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Overenie synchronizácie desktopu"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Prosím, overte, že desktopová aplikácia zobrazuje tento odtlačok: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "Integrácia v prehliadači nie je povolená"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Aktualizujte desktopovú aplikáciu"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "Ak chcete používať biometrické odomykanie, aktualizujte desktopovú aplikáciu alebo vypnite odomykanie odtlačkom prsta v nastaveniach desktopovej aplikácie."
-  },
   "changeAtRiskPassword": {
     "message": "Zmeniť rizikové heslá"
   },
@@ -7889,9 +7889,32 @@
     "message": "Zistené riziká",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Upgradujte, aby ste videli heslá"
+  },
   "categoryHealthy": {
     "message": "Žiadne položky si nevyžadujú pozornosť",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Skenovanie trezoru",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Kontrola uniknutých, slabých a opakovane používaných hesiel.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "Prebieha",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Niečo sa pokazilo",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Kontrola trezoru sa nedokončila pre neočakávanú chybu.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Uniknuté heslá"

@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Kiegészítő opciók"
   },
-  "fillAssistActiveNotice": {
+  "fillAssistActiveNoticeV2": {
     "message": "Az automatikus kitöltés a Kitöltési segédet használja ezen az oldalon."
   },
-  "activateFillAssist": {
+  "activateFillAssistV2": {
     "message": "Kitöltési segéd bekapcsolása"
   },
-  "activateFillAssistDescription": {
+  "activateFillAssistDescriptionV2": {
     "message": "A kitöltési segédl a webhely specifikus szabályok használatával javítja az automatikus kitöltési pontosságot a támogatott webhelyeken. A funkció használatakor nincs adat gyűjtés vagy mentés."
   },
-  "aboutFillAssistLabel": {
+  "aboutFillAssistLabelV2": {
     "message": "A kitöltési segédről"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Engedélyezzük a webhelyeknek az automatikus kitöltésre szánt mezők kizárását."
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Azon mezők kihagyása, amelyeket egy webhely a `data-bwignore` attribútummal jelöl."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Engedélyezzük a webhelyeknek, hogy mezőket adjanak hozzá az automatikus kitöltéshez."
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Használjunk minden olyan span elemet, amelyet a webhely `data-bwautofill` attribútummal jelöl meg."
   },
   "enableContextMenuItem": {
     "message": "Helyi menü opciók megjelenítése"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Nem található token vagy API kulcs. Próbáljon meg ki-, majd újra bejelentkezni."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Asztali szinkronizálás ellenőrzés"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Ellenőrizzük, hogy az asztali alkalmazás megjeleníti-e ezt az ujjlenyomatot: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "A böngésző integráció nincs beüzemelve."
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Frissítsük az asztali alkalmazást."
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "A biometrikus feloldás használatához frissítsük az asztali alkalmazást vagy tiltsuk le az ujjlenyomatos feloldást az asztali beállításokban."
-  },
   "changeAtRiskPassword": {
     "message": "Kockázatos jelszó megváltoztatása"
   },
@@ -7889,9 +7889,32 @@
     "message": "Azonosított kockázatok",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Áttérés a jelszavak megtekintéséhez"
+  },
   "categoryHealthy": {
     "message": "Egyik elem sem igényel figyelmet.",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "A széf vizsgálata folyamatban van",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "A kitett, gyenge és újrafelhasznált jelszavak ellenőrzése.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "Folyamatban",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Valamilyen hiba történt.",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "A széf vizsgálata nem fejeződött be egy váratlan hiba miatt.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Kitett jelszavak"

@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Extra instellingen"
   },
-  "fillAssistActiveNotice": {
-    "message": "Autofill gebruikt invulassistentie op deze pagina."
+  "fillAssistActiveNoticeV2": {
+    "message": "Automatisch invullen gebruikt de invulassistent op deze pagina."
   },
-  "activateFillAssist": {
+  "activateFillAssistV2": {
     "message": "Invulassistent inschakelen"
   },
-  "activateFillAssistDescription": {
+  "activateFillAssistDescriptionV2": {
     "message": "Invulassistent verbetert de nauwkeurigheid op ondersteunde websites door sitespecifieke regels te gebruiken. Er worden geen gegevens verzameld of opgeslagen wanneer je deze functie gebruikt."
   },
-  "aboutFillAssistLabel": {
+  "aboutFillAssistLabelV2": {
     "message": "Over invulassistent"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Toestaan dat websites velden van automatisch invullen uitsluiten"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Velden overslaan die een website met het `data-bwignore` attribuut markeert."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Toestaan dat websites velden voor automatisch invullen toevoegt"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Gebruik alle span-elementen die een website met het `data-bwautofill` attribuut markeert."
   },
   "enableContextMenuItem": {
     "message": "Contextmenu-opties weergeven"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Geen verversingstoken of API-sleutels gevonden. Probeer uit te loggen en weer in te loggen."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Desktopsynchronisatieverificatie"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Controleer of de desktopapplicatie deze vingerafdruk weergeeft: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "Browserintegratie is niet ingeschakeld"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Werk je desktopapplicatie bij"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "Als je biometrische gegevens wilt gebruiken, moet je de desktopapplicatie bijwerken of vingerafdrukontgrendeling uitschakelen in de instellingen van de desktopapplicatie."
-  },
   "changeAtRiskPassword": {
     "message": "Risicovol wachtwoord wijzigen"
   },
@@ -7889,9 +7889,32 @@
     "message": "Risico's geïdentificeerd",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Upgrade om wachtwoorden te bekijken"
+  },
   "categoryHealthy": {
     "message": "Geen items die aandacht nodig hebben",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Je kluis scannen",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Controleren op gelekte, zwakke en hergebruikte wachtwoorden.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "In behandeling",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Er ging iets mis",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Je kluisscan is niet voltooid vanwege een onverwachte fout.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Gelekte wachtwoorden"

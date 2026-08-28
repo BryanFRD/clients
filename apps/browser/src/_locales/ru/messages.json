@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Дополнительные настройки"
   },
-  "fillAssistActiveNotice": {
+  "fillAssistActiveNoticeV2": {
     "message": "Автозаполнение использует помощника по заполнению на этой странице."
   },
-  "activateFillAssist": {
-    "message": "Включить помощника по заполнению"
+  "activateFillAssistV2": {
+    "message": "Включить помощник по заполнению"
   },
-  "activateFillAssistDescription": {
-    "message": "Помощник по заполнению повышает точность автозаполнения на поддерживаемых сайтах за счет использования правил, специфичных для конкретного сайта. При использовании этой функции данные не собираются и не сохраняются."
+  "activateFillAssistDescriptionV2": {
+    "message": "Функция помощник по заполнению повышает точность автозаполнения на поддерживаемых сайтах за счет использования правил, специфичных для конкретного сайта. При использовании этой функции данные не собираются и не сохраняются."
   },
-  "aboutFillAssistLabel": {
+  "aboutFillAssistLabelV2": {
     "message": "О помощнике по заполнению"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Allow websites to exclude fields to autofill"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Skip fields that a website marks with the `data-bwignore` attribute."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Allow websites to add fields to autofill"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Use any span elements that a website marks with the `data-bwautofill` attribute."
   },
   "enableContextMenuItem": {
     "message": "Показать опции контекстного меню"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Не найдены токен обновления или ключи API. Пожалуйста, попробуйте выполнить выход и повторно авторизоваться."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Проверка синхронизации на компьютере"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Пожалуйста, убедитесь, что приложение для компьютера отображает этот отпечаток: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "Интеграция с браузером не настроена"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Пожалуйста, обновите приложение для компьютера"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "Чтобы использовать биометрическую разблокировку, обновите приложение для компьютера или отключите разблокировку по отпечатку пальца в настройках компьютера."
-  },
   "changeAtRiskPassword": {
     "message": "Изменить пароль, подверженный риску"
   },
@@ -7889,9 +7889,32 @@
     "message": "Обнаружены риски",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Обновите, чтобы просматривать пароли"
+  },
   "categoryHealthy": {
     "message": "Элементов, требующих внимания нет",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Сканирование вашего хранилища",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Проверка на наличие скомпрометированных, слабых и повторно используемых паролей.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "Выполняется",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Что-то пошло не так",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Сканирование хранилища не было выполнено из-за непредвиденной ошибки.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Скомпрометированные пароли"

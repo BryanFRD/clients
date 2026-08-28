@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "Допълнителни настройки"
   },
-  "fillAssistActiveNotice": {
+  "fillAssistActiveNoticeV2": {
     "message": "Автоматичното попълване използва асистираното попълване на тази страница."
   },
-  "activateFillAssist": {
+  "activateFillAssistV2": {
     "message": "Включване на асистираното попълване"
   },
-  "activateFillAssistDescription": {
+  "activateFillAssistDescriptionV2": {
     "message": "Асистираното попълване подобрява точността на автоматичното попълване в поддържаните уеб сайтове, чрез използване на определени правила. Никакви данни не се събират или съхраняват, когато използвате тази функционалност."
   },
-  "aboutFillAssistLabel": {
+  "aboutFillAssistLabelV2": {
     "message": "Относно асистираното попълване"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "Разрешаване на уеб сайтовете да изключват полета от автоматичното попълване"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "Пропускане на полетата, които са отбелязани от уеб сайтовете с атрибута `data-bwignore`."
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "Разрешаване на уеб сайтовете да добавят полета към автоматичното попълване"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "Използване на елементите „span“, които са отбелязани от уеб сайтовете с атрибута `data-bwautofill`."
   },
   "enableContextMenuItem": {
     "message": "Показване на опции в контекстното меню"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "Няма намерен идентификатор за опресняване или ключове за ППИ. Опитайте да се отпишете и да се впишете отново."
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "Потвърждаване на синхронизацията на самостоятелното приложение"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "Уверете се, че самостоятелното приложение показва следния идентификатор:"
   },
   "desktopIntegrationDisabledTitle": {
     "message": "Интеграцията с браузър е изключена"
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "Моля, обновете самостоятелното приложение"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "За да използвате отключването чрез биометрични данни, обновете самостоятелното приложение или изключете отключването чрез пръстов отпечатък в настройките му."
-  },
   "changeAtRiskPassword": {
     "message": "Промяна на парола в риск"
   },
@@ -7889,9 +7889,32 @@
     "message": "Открити рискове",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "Надградете, за да прегледате паролите"
+  },
   "categoryHealthy": {
     "message": "Няма нуждаещи се от внимание елементи",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "Сканиране на трезора Ви",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "Проверява се за разкрити, слаби и преизползвани пароли.",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "В процес на работа",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "Нещо се обърка",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "Сканирането на трезора Ви не завърши поради неочаквана грешка.",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "Разобличени пароли"

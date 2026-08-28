@@ -1089,10 +1089,10 @@
     "message": "フォルダーを追加しました"
   },
   "folderEdited": {
-    "message": "Folder edited"
+    "message": "フォルダーを編集しました"
   },
   "enterAName": {
-    "message": "Enter a name."
+    "message": "名前を入力してください。"
   },
   "twoStepLoginConfirmation": {
     "message": "2段階認証を使うと、ログイン時にセキュリティキーや認証アプリ、SMS、電話やメールでの認証を必要にすることでアカウントをさらに安全に出来ます。2段階認証は bitwarden.com ウェブ保管庫で有効化できます。ウェブサイトを開きますか？"
@@ -1406,17 +1406,29 @@
   "additionalOptions": {
     "message": "追加オプション"
   },
-  "fillAssistActiveNotice": {
+  "fillAssistActiveNoticeV2": {
     "message": "自動入力はこのページで入力アシストを使用しています。"
   },
-  "activateFillAssist": {
+  "activateFillAssistV2": {
     "message": "入力アシストをオンにする"
   },
-  "activateFillAssistDescription": {
+  "activateFillAssistDescriptionV2": {
     "message": "入力アシストは、サイト固有のルールを使用して対応サイトの自動入力の精度を向上させます。この機能を使用してもデータが収集されたり保存されることはありません。"
   },
-  "aboutFillAssistLabel": {
+  "aboutFillAssistLabelV2": {
     "message": "入力アシストについて"
+  },
+  "honorDataBitwardenIgnoreAttributeLabel": {
+    "message": "自動入力項目の除外をウェブサイトに許可する"
+  },
+  "honorDataBitwardenIgnoreAttributeHint": {
+    "message": "ウェブサイトが「data-bwignore」属性でマークした項目をスキップします。"
+  },
+  "honorDataBitwardenAutofillAttributeLabel": {
+    "message": "自動入力項目の追加をウェブサイトに許可する"
+  },
+  "honorDataBitwardenAutofillAttributeHint": {
+    "message": "ウェブサイトが「data-bwautofill」属性でマークしたすべての span 要素を使用します。"
   },
   "enableContextMenuItem": {
     "message": "コンテキストメニューオプションを表示"
@@ -3182,12 +3194,6 @@
   },
   "errorRefreshingAccessTokenDesc": {
     "message": "リフレッシュトークンや API キーが見つかりませんでした。ログアウトして再度ログインしてください。"
-  },
-  "desktopSyncVerificationTitle": {
-    "message": "デスクトップ同期の検証"
-  },
-  "desktopIntegrationVerificationText": {
-    "message": "デスクトップアプリにこれが表示されていることを確認してください: "
   },
   "desktopIntegrationDisabledTitle": {
     "message": "ブラウザー統合が有効になっていません"
@@ -5163,16 +5169,16 @@
     "message": "Avira ウェブ保管庫で、「設定」→「マイデータ」→「データのエクスポート」に進み、CSV ファイルを保存します。"
   },
   "importBlurInstructions": {
-    "message": "In the Blur web vault, click your username at the top and go to \"Settings\" → \"Export Data\", then click \"Export CSV\" for your \"Accounts\"."
+    "message": "Blur のウェブ保管庫で、上部のユーザー名をクリックし、「設定」→「データのエクスポート」に移動し、「アカウント」の「CSV をエクスポート」をクリックします。"
   },
   "importSafeincloudInstructions": {
-    "message": "Using the SafeInCloud desktop application, navigate to \"File\" → \"Export\" → \"As XML\" and save the XML file."
+    "message": "SafeInCloud デスクトップアプリを使用して、「ファイル」→「エクスポート」→「XML として」に移動し、XML ファイルを保存します。"
   },
   "importPadlockInstructions": {
-    "message": "Using the Padlock desktop application, click the hamburger icon in the top left corner and navigate to \"Settings\" → \"Export\" button and save the file \"As CSV\"."
+    "message": "Padlock デスクトップアプリを使用して、左上隅のハンバーガーアイコンをクリックし、「設定」→「エクスポート」ボタンに移動し、ファイルを「CSV として」を保存します。"
   },
   "importKeepass2Instructions": {
-    "message": "Using the KeePass 2 desktop application, navigate to \"File\" → \"Export\" and select the \"KeePass XML (2.x)\" option."
+    "message": "KeePass 2 デスクトップアプリを使用して、「ファイル」→「エクスポート」に移動し、「KeePass XML (2.x)」オプションを選択します。"
   },
   "importUpmInstructions": {
     "message": "Using the Universal Password Manager desktop application, navigate to \"Database\" → \"Export\" and save the CSV file."
@@ -7080,12 +7086,6 @@
       }
     }
   },
-  "updateDesktopAppOrDisableFingerprintDialogTitle": {
-    "message": "デスクトップアプリを更新してください"
-  },
-  "updateDesktopAppOrDisableFingerprintDialogMessage": {
-    "message": "生体認証によるロック解除を使用するには、デスクトップアプリを更新するか、デスクトップの設定で指紋認証によるロック解除を無効にしてください。"
-  },
   "changeAtRiskPassword": {
     "message": "危険なパスワードの変更"
   },
@@ -7889,9 +7889,32 @@
     "message": "リスクを検出しました",
     "description": "Section heading above the list of risk categories on the Health Overview."
   },
+  "upgradeToViewPasswords": {
+    "message": "アップグレードするとパスワードを表示できます"
+  },
   "categoryHealthy": {
     "message": "注意が必要なアイテムはありません",
     "description": "Accessible label for the checkmark shown on a risk category with a count of zero."
+  },
+  "scanningYourVault": {
+    "message": "保管庫をスキャン中",
+    "description": "Heading shown while the vault health scan is running."
+  },
+  "scanningYourVaultDescription": {
+    "message": "流出済み・脆弱・再利用されたパスワードを確認しています。",
+    "description": "Explains what the vault health scan is doing while it runs."
+  },
+  "scanInProgress": {
+    "message": "進行中",
+    "description": "Short status meaning the vault health scan is underway, used where a completion percentage is not known."
+  },
+  "healthScanFailed": {
+    "message": "何らかのエラーが発生しました",
+    "description": "Heading shown when the vault health scan did not complete."
+  },
+  "healthScanFailedDescription": {
+    "message": "予期しないエラーのため、保管庫のスキャンが完了しませんでした。",
+    "description": "Explains that the vault health scan did not complete."
   },
   "exposedPasswordsTitle": {
     "message": "流出済みパスワード"
