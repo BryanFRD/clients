@@ -1,11 +1,11 @@
 <popup-page [hideOverflow]="showSkeletonsLoaders$ | async">
-  <popup-header slot="header" [pageTitle]="vfo1Enabled() ? '' : ('vault' | i18n)">
+  <popup-header slot="header" [pageTitle]="pageTitle()">
     @if (vfo1Enabled()) {
       <app-vault-switcher slot="title-start" [scope]="vaultScope()"></app-vault-switcher>
     }
     @if (vfo1Enabled()) {
       <span slot="title-end" class="tw-text-sm" data-testid="vault-item-count">
-        {{ "itemCount" | i18n: (cipherCount$ | async) }}
+        {{ "itemCount" | i18n: (cipherCount$ | async) ?? 0 }}
       </span>
     }
     <ng-container slot="end">

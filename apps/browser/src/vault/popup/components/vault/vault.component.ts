@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule } from "@angular/common";
-import { Component, DestroyRef, effect, inject, OnDestroy, OnInit } from "@angular/core";
+import { Component, computed, DestroyRef, effect, inject, OnDestroy, OnInit } from "@angular/core";
 import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import {
@@ -179,7 +179,14 @@ export class VaultComponent implements OnInit, OnDestroy {
   protected filteredCiphers$ = this.vaultPopupItemsService.filteredCiphers$;
   protected favoriteCiphers$ = this.vaultPopupItemsService.favoriteCiphers$;
   protected allFilters$ = this.vaultPopupListFiltersService.allFilters$;
-  protected cipherCount$ = this.vaultPopupItemsService.cipherCount$;
+  private readonly vaultPopupListTableService = inject(VaultPopupListTableService);
+
+  /**
+   * The header's item count. Read off the list table's rows rather than
+   * `VaultPopupItemsService.cipherCount$`, which counts the whole active vault and so would report
+   * a total the scoped list below it contradicts.
+   */
+  protected cipherCount$ = this.vaultPopupListTableService.itemCount$;
 
   protected showPremiumSpotlight$ = combineLatest([
     this.activeUserId$.pipe(
@@ -248,7 +255,6 @@ export class VaultComponent implements OnInit, OnDestroy {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly vaultNavService = inject(VaultNavService);
-  private readonly vaultPopupListTableService = inject(VaultPopupListTableService);
 
   /**
    * The vault the `:vaultId` route segment narrows the page to, resolved against the account's
@@ -259,6 +265,11 @@ export class VaultComponent implements OnInit, OnDestroy {
    * selection survives a close and reopen with no cache key of its own, and the back button walks
    * vault switches the way it walks any other navigation.
    */
+  /** The account's vaults; `undefined` until they load. */
+  private readonly vaultNav = toSignal(
+    this.activeUserId$.pipe(switchMap((userId) => this.vaultNavService.viewModel$(userId))),
+  );
+
   protected readonly vaultScope = toSignal(
     combineLatest([
       this.activatedRoute.paramMap,
@@ -268,6 +279,12 @@ export class VaultComponent implements OnInit, OnDestroy {
       ),
     ]).pipe(map(([params, nav]) => resolveVaultScope(params.get("vaultId"), null, nav))),
     { initialValue: ALL_ITEMS_SCOPE as VaultScope | null },
+  );
+
+  protected readonly pageTitle = computed(() =>
+    this.vfo1Enabled() && (this.vaultNav()?.vaults.length ?? 0) > 1
+      ? ""
+      : this.i18nService.t("vault"),
   );
 
   /**
