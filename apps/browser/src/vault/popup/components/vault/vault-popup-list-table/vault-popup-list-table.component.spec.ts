@@ -15,7 +15,6 @@ import { Organization } from "@bitwarden/common/admin-console/models/domain/orga
 import { AccountService } from "@bitwarden/common/auth/abstractions/account.service";
 import { DomainSettingsService } from "@bitwarden/common/autofill/services/domain-settings.service";
 import { BillingAccountProfileStateService } from "@bitwarden/common/billing/abstractions/account/billing-account-profile-state.service";
-import { ProductTierType } from "@bitwarden/common/billing/enums";
 import { EventCollectionService } from "@bitwarden/common/dirt/event-logs";
 import { FeatureFlag } from "@bitwarden/common/enums/feature-flag.enum";
 import { ConfigService } from "@bitwarden/common/platform/abstractions/config/config.service";
@@ -40,12 +39,7 @@ import {
   ToastService,
 } from "@bitwarden/components";
 import { StateProvider } from "@bitwarden/state";
-import {
-  ALL_ITEMS_SCOPE,
-  PasswordRepromptService,
-  VaultCopyButtonsService,
-  VaultScopeType,
-} from "@bitwarden/vault";
+import { PasswordRepromptService, VaultCopyButtonsService } from "@bitwarden/vault";
 
 import { VaultPopupAutofillService } from "../../../services/vault-popup-autofill.service";
 import { VaultPopupItemsService } from "../../../services/vault-popup-items.service";
@@ -368,56 +362,6 @@ describe("VaultPopupListTableComponent", () => {
 
         expect(liveAnnouncer.announce).not.toHaveBeenCalled();
       });
-    });
-  });
-
-  /**
-   * The route's vault scope narrows the rows directly, the way the web vault narrows its own —
-   * `cipherInScope` decides the vault and the item state together, so the chips stay free to
-   * narrow within whatever the scope already admitted.
-   */
-  describe("vault scope", () => {
-    const ORG_ID = "11111111-1111-4111-8111-111111111111";
-
-    beforeEach(() => {
-      filteredCiphers$.next([
-        makeCipher({ id: "personal", organizationId: null }),
-        // The Vault column reads `organization` for an org-owned row's tile.
-        makeCipher({
-          id: "org",
-          organizationId: ORG_ID,
-          organization: { id: ORG_ID, productTierType: ProductTierType.Enterprise } as any,
-        }),
-      ]);
-      fixture.detectChanges();
-    });
-
-    it("shows every vault's items when unscoped", () => {
-      fixture.componentRef.setInput("scope", ALL_ITEMS_SCOPE);
-      fixture.detectChanges();
-
-      expect(component["rows"]()).toHaveLength(2);
-    });
-
-    it("narrows to the personal vault", () => {
-      fixture.componentRef.setInput("scope", { type: VaultScopeType.MyVault });
-      fixture.detectChanges();
-
-      const rows = component["rows"]();
-      expect(rows).toHaveLength(1);
-      expect(rows[0].cipher.organizationId).toBeNull();
-    });
-
-    it("narrows to an organization's vault", () => {
-      fixture.componentRef.setInput("scope", {
-        type: VaultScopeType.Organization,
-        organizationId: ORG_ID,
-      });
-      fixture.detectChanges();
-
-      const rows = component["rows"]();
-      expect(rows).toHaveLength(1);
-      expect(rows[0].cipher.organizationId).toBe(ORG_ID);
     });
   });
 

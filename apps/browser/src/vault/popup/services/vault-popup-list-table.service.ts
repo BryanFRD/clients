@@ -1,6 +1,8 @@
 import { inject, Injectable, NgZone } from "@angular/core";
+import { toSignal } from "@angular/core/rxjs-interop";
 import { Router } from "@angular/router";
 import {
+  BehaviorSubject,
   combineLatest,
   debounce,
   distinctUntilChanged,
@@ -26,7 +28,13 @@ import {
   CipherViewLikeUtils,
 } from "@bitwarden/common/vault/utils/cipher-view-like-utils";
 import { DialogService } from "@bitwarden/components";
-import { DecryptionFailureDialogComponent, PasswordRepromptService } from "@bitwarden/vault";
+import {
+  ALL_ITEMS_SCOPE,
+  cipherInScope,
+  DecryptionFailureDialogComponent,
+  PasswordRepromptService,
+  type VaultScope,
+} from "@bitwarden/vault";
 
 import { BrowserApi } from "../../../platform/browser/browser-api";
 import BrowserPopupUtils from "../../../platform/browser/browser-popup-utils";
@@ -97,6 +105,19 @@ export class VaultPopupListTableService {
   private readonly vaultSettingsService = inject(VaultSettingsService);
 
   /**
+   * The vault the page's `:vaultId` route segment narrows to.
+   */
+  private readonly scope$ = new BehaviorSubject<VaultScope>(ALL_ITEMS_SCOPE);
+
+  /** The scope currently narrowing the rows. Read by the table to gate its organization chip. */
+  readonly vaultScope = toSignal(this.scope$, { initialValue: ALL_ITEMS_SCOPE });
+
+  /** Narrows the vault to `scope`; {@link ALL_ITEMS_SCOPE} shows every vault's items. */
+  setScope(scope: VaultScope | null): void {
+    this.scope$.next(scope ?? ALL_ITEMS_SCOPE);
+  }
+
+  /**
    * Timeout used to add a small delay when selecting a cipher to allow for double click to launch.
    */
   private viewCipherTimeout?: number;
@@ -137,16 +158,26 @@ export class VaultPopupListTableService {
     this.vaultPopupItemsService.filteredCiphers$,
     this.vaultPopupItemsService.hasSearchText$,
     this.rowActionContext$,
+    this.scope$,
   ]).pipe(
-    map(([autoFillCiphers, favoriteCiphers, filteredCiphers, hasSearchText, context]) => {
+    map(([autoFillCiphers, favoriteCiphers, filteredCiphers, hasSearchText, context, scope]) => {
+      /**
+       * One section's rows: the ciphers the scope admits, in display order. `cipherInScope` decides
+       * the vault and the item state together, the way the web vault narrows its own rows.
+       */
+      const section = (ciphers: PopupCipherViewLike[], name: VaultSection) =>
+        ciphers
+          .filter((cipher) => cipherInScope(cipher, scope))
+          .map((cipher) => this.toRow(cipher, name, context));
+
       if (hasSearchText) {
-        return filteredCiphers.map((cipher) => this.toRow(cipher, "allItems", context));
+        return section(filteredCiphers, "allItems");
       }
 
       return [
-        ...autoFillCiphers.map((cipher) => this.toRow(cipher, "autofill", context)),
-        ...favoriteCiphers.map((cipher) => this.toRow(cipher, "favorites", context)),
-        ...filteredCiphers.map((cipher) => this.toRow(cipher, "allItems", context)),
+        ...section(autoFillCiphers, "autofill"),
+        ...section(favoriteCiphers, "favorites"),
+        ...section(filteredCiphers, "allItems"),
       ];
     }),
   );

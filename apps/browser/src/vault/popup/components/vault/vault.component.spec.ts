@@ -50,6 +50,7 @@ import { VaultPopupAutofillService } from "../../services/vault-popup-autofill.s
 import { VaultPopupItemsService } from "../../services/vault-popup-items.service";
 import { VaultPopupListFiltersService } from "../../services/vault-popup-list-filters.service";
 import { VaultPopupListTableFiltersService } from "../../services/vault-popup-list-table-filters.service";
+import { VaultPopupListTableService } from "../../services/vault-popup-list-table.service";
 import { VaultPopupLoadingService } from "../../services/vault-popup-loading.service";
 import { VaultPopupScrollPositionService } from "../../services/vault-popup-scroll-position.service";
 import { AtRiskPasswordCalloutComponent } from "../at-risk-callout/at-risk-password-callout.component";
@@ -228,6 +229,8 @@ describe("VaultComponent", () => {
     hasSearchText$: new BehaviorSubject<boolean>(false),
   } as Partial<VaultPopupItemsService>;
 
+  const listTableSvc = { setScope: jest.fn() };
+
   const filtersSvc: any = {
     allFilters$: new Subject<any>(),
     filters$: new BehaviorSubject<any>({}),
@@ -308,6 +311,11 @@ describe("VaultComponent", () => {
           // Read by the vault switcher; empty organizations keep it hidden by default.
           provide: VaultPopupListTableFiltersService,
           useValue: { organizations$: new BehaviorSubject<any[]>([]) },
+        },
+        {
+          // The page pushes its resolved scope here; the service narrows the rows with it.
+          provide: VaultPopupListTableService,
+          useValue: listTableSvc,
         },
         {
           provide: VaultNavService,
@@ -565,6 +573,18 @@ describe("VaultComponent", () => {
       expect(seen.slice(-2)).toEqual([10, 3]);
 
       flush();
+    }));
+
+    /** The page resolves `:vaultId` and hands the scope to the service that narrows the rows. */
+    it("publishes the route's vault scope to the list table service", fakeAsync(() => {
+      const fixture = createWithFlag(true);
+
+      expect(listTableSvc.setScope).toHaveBeenCalledWith(
+        expect.objectContaining({ type: "allItems" }),
+      );
+
+      flush();
+      fixture.destroy();
     }));
 
     it("renders the table and drops the legacy header and list when the flag is on", fakeAsync(() => {

@@ -143,7 +143,7 @@
     -->
     @if (vfo1Enabled()) {
       <div class="tw-flex tw-flex-col tw-justify-center tw-h-full">
-        <app-vault-popup-list-table [scope]="vaultScope()"></app-vault-popup-list-table>
+        <app-vault-popup-list-table></app-vault-popup-list-table>
       </div>
     } @else if (!vfo1Enabled() && vaultState === VaultStateEnum.NoResults) {
       <div class="tw-flex tw-flex-col tw-justify-center tw-h-full">

@@ -71,6 +71,7 @@ import { PopupPageComponent } from "../../../../platform/popup/layout/popup-page
 import { IntroCarouselService } from "../../services/intro-carousel.service";
 import { VaultPopupItemsService } from "../../services/vault-popup-items.service";
 import { VaultPopupListFiltersService } from "../../services/vault-popup-list-filters.service";
+import { VaultPopupListTableService } from "../../services/vault-popup-list-table.service";
 import { VaultPopupLoadingService } from "../../services/vault-popup-loading.service";
 import { VaultPopupScrollPositionService } from "../../services/vault-popup-scroll-position.service";
 import { AtRiskPasswordCalloutComponent } from "../at-risk-callout/at-risk-password-callout.component";
@@ -247,6 +248,7 @@ export class VaultComponent implements OnInit, OnDestroy {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly vaultNavService = inject(VaultNavService);
+  private readonly vaultPopupListTableService = inject(VaultPopupListTableService);
 
   /**
    * The vault the `:vaultId` route segment narrows the page to, resolved against the account's
@@ -266,6 +268,14 @@ export class VaultComponent implements OnInit, OnDestroy {
       ),
     ]).pipe(map(([params, nav]) => resolveVaultScope(params.get("vaultId"), null, nav))),
     { initialValue: ALL_ITEMS_SCOPE as VaultScope | null },
+  );
+
+  /**
+   * Push the vault scope to the list table's service, which narrows the rows with it.
+   * That service is `providedIn: "root"`, so it cannot see this route's `:vaultId`.
+   */
+  private readonly publishScope = effect(() =>
+    this.vaultPopupListTableService.setScope(this.vaultScope()),
   );
 
   protected vaultIcon = VaultOpen;

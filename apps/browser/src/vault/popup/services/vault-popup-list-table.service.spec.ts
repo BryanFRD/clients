@@ -6,13 +6,18 @@ import { BehaviorSubject, firstValueFrom, of, Subject } from "rxjs";
 import { AccountService } from "@bitwarden/common/auth/abstractions/account.service";
 import { FeatureFlag } from "@bitwarden/common/enums/feature-flag.enum";
 import { ConfigService } from "@bitwarden/common/platform/abstractions/config/config.service";
+import { OrganizationId } from "@bitwarden/common/types/guid";
 import { CipherService } from "@bitwarden/common/vault/abstractions/cipher.service";
 import { VaultSettingsService } from "@bitwarden/common/vault/abstractions/vault-settings/vault-settings.service";
 import { CipherType } from "@bitwarden/common/vault/enums";
 import { SearchTextDebounceInterval } from "@bitwarden/common/vault/services/search.service";
 import { CipherViewLikeUtils } from "@bitwarden/common/vault/utils/cipher-view-like-utils";
 import { DialogService } from "@bitwarden/components";
-import { DecryptionFailureDialogComponent, PasswordRepromptService } from "@bitwarden/vault";
+import {
+  DecryptionFailureDialogComponent,
+  PasswordRepromptService,
+  VaultScopeType,
+} from "@bitwarden/vault";
 
 import { BrowserApi } from "../../../platform/browser/browser-api";
 import BrowserPopupUtils from "../../../platform/browser/browser-popup-utils";
@@ -128,6 +133,55 @@ describe("VaultPopupListTableService", () => {
 
       expect(rows.map((r) => r._section)).toEqual(["autofill", "favorites", "allItems"]);
       expect(rows.map((r) => r.cipher.name)).toEqual(["Autofill", "Favorite", "All Items"]);
+    });
+
+    /**
+     * `setScope` narrows every section, the way the web vault narrows its own rows — `cipherInScope`
+     * decides the vault and the item state together.
+     */
+    describe("vault scope", () => {
+      const ORG_ID = "11111111-1111-4111-8111-111111111111";
+
+      beforeEach(() => {
+        filteredCiphers$.next([
+          makeCipher({ id: "personal", organizationId: null }),
+          makeCipher({ id: "org", organizationId: ORG_ID }),
+        ]);
+      });
+
+      it("shows every vault's items when unscoped", async () => {
+        const rows = await firstValueFrom(service.rows$);
+
+        expect(rows.map((r) => r.cipher.id)).toEqual(["personal", "org"]);
+      });
+
+      it("narrows to the personal vault", async () => {
+        service.setScope({ type: VaultScopeType.MyVault });
+
+        const rows = await firstValueFrom(service.rows$);
+
+        expect(rows.map((r) => r.cipher.id)).toEqual(["personal"]);
+      });
+
+      it("narrows to an organization's vault", async () => {
+        service.setScope({
+          type: VaultScopeType.Organization,
+          organizationId: ORG_ID as OrganizationId,
+        });
+
+        const rows = await firstValueFrom(service.rows$);
+
+        expect(rows.map((r) => r.cipher.id)).toEqual(["org"]);
+      });
+
+      it("widens again when the scope clears", async () => {
+        service.setScope({ type: VaultScopeType.MyVault });
+        service.setScope(null);
+
+        const rows = await firstValueFrom(service.rows$);
+
+        expect(rows.map((r) => r.cipher.id)).toEqual(["personal", "org"]);
+      });
     });
 
     it("folds to a single all-items section of filtered ciphers when searching", async () => {
