@@ -174,6 +174,15 @@ describe("VaultPopupListTableService", () => {
         expect(rows.map((r) => r.cipher.id)).toEqual(["org"]);
       });
 
+      /** The header reads this, so a scoped page must not report the whole vault's total. */
+      it("counts only the items the scope admits", async () => {
+        expect(await firstValueFrom(service.itemCount$)).toBe(2);
+
+        service.setScope({ type: VaultScopeType.MyVault });
+
+        expect(await firstValueFrom(service.itemCount$)).toBe(1);
+      });
+
       it("widens again when the scope clears", async () => {
         service.setScope({ type: VaultScopeType.MyVault });
         service.setScope(null);
@@ -182,6 +191,17 @@ describe("VaultPopupListTableService", () => {
 
         expect(rows.map((r) => r.cipher.id)).toEqual(["personal", "org"]);
       });
+    });
+
+    /** A cipher in several sections still counts once — `rows$` holds up to three rows for it. */
+    it("counts a cipher once even when it appears in several sections", async () => {
+      const cipher = makeCipher({ id: "a", name: "Autofill" });
+      autoFillCiphers$.next([cipher]);
+      favoriteCiphers$.next([cipher]);
+      filteredCiphers$.next([cipher]);
+
+      expect((await firstValueFrom(service.rows$)).length).toBe(3);
+      expect(await firstValueFrom(service.itemCount$)).toBe(1);
     });
 
     it("folds to a single all-items section of filtered ciphers when searching", async () => {

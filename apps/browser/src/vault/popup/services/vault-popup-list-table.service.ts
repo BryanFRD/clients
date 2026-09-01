@@ -182,6 +182,18 @@ export class VaultPopupListTableService {
     }),
   );
 
+  /**
+   * The number of items the vault currently shows, for the header's count.
+   *
+   * Counted off the `allItems` section rather than {@link rows$} as a whole: a cipher that is both
+   * an autofill suggestion and a favorite appears in up to three sections, and that section always
+   * holds the complete list once each. Reading it here keeps the count in step with the rows —
+   * including the vault scope, which narrows both.
+   */
+  readonly itemCount$: Observable<number> = this.rows$.pipe(
+    map((rows) => rows.filter((row) => row._section === "allItems").length),
+  );
+
   private toRow(
     cipher: PopupCipherViewLike,
     section: VaultSection,

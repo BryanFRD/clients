@@ -229,7 +229,12 @@ describe("VaultComponent", () => {
     hasSearchText$: new BehaviorSubject<boolean>(false),
   } as Partial<VaultPopupItemsService>;
 
-  const listTableSvc = { setScope: jest.fn() };
+  /** Rows as the list table service builds them; the header counts the `allItems` section. */
+  const itemCount$ = new BehaviorSubject<number>(0);
+  const listTableSvc = { setScope: jest.fn(), itemCount$ };
+
+  /** The account's vaults, as the header reads them to decide whether to show a page title. */
+  const vaultNav$ = new BehaviorSubject<any>({ vaults: [], organizationDataOwnership: false });
 
   const filtersSvc: any = {
     allFilters$: new Subject<any>(),
@@ -320,7 +325,7 @@ describe("VaultComponent", () => {
         {
           provide: VaultNavService,
           useValue: {
-            viewModel$: () => of({ vaults: [], organizationDataOwnership: false }),
+            viewModel$: () => vaultNav$,
           },
         },
         { provide: VaultPopupLoadingService, useValue: loadingSvc },
@@ -543,39 +548,83 @@ describe("VaultComponent", () => {
       return fixture;
     }
 
-    /**
-     * `popup-header` is removed from the TestBed and `NO_ERRORS_SCHEMA` is on, so anything projected
-     * into it renders nowhere and the count element cannot be asserted on here. These cover the
-     * count's source instead; the flag gate on the header's own slots is exercised in
-     * `popup-header.component.spec.ts`, and the rendered placement is left to manual verification.
-     */
-    it("exposes the filtered cipher count for the header", fakeAsync(() => {
+    it("shows the list table's item count in the header", fakeAsync(() => {
       const fixture = createWithFlag(true);
 
-      itemsSvc.cipherCount$.next(10);
+      itemCount$.next(10);
 
       let count: number | undefined;
       fixture.componentInstance["cipherCount$"].subscribe((c: number) => (count = c));
       expect(count).toBe(10);
 
       flush();
+      fixture.destroy();
     }));
 
-    it("tracks the count as filters change it", fakeAsync(() => {
+    /** The count tracks the rows, so narrowing to a vault moves it too. */
+    it("tracks the count as the rows narrow", fakeAsync(() => {
       const fixture = createWithFlag(true);
 
       const seen: number[] = [];
       fixture.componentInstance["cipherCount$"].subscribe((c: number) => seen.push(c));
 
-      itemsSvc.cipherCount$.next(10);
-      itemsSvc.cipherCount$.next(3);
+      itemCount$.next(10);
+      itemCount$.next(3);
 
       expect(seen.slice(-2)).toEqual([10, 3]);
 
       flush();
+      fixture.destroy();
     }));
 
-    /** The page resolves `:vaultId` and hands the scope to the service that narrows the rows. */
+    /**
+     * The switcher names the page only when it renders, and it renders only with more than one
+     * vault — so a one-vault account has to keep the "Vault" title or its page goes unnamed.
+     */
+    describe("page title", () => {
+      const title = (fixture: ComponentFixture<VaultComponent>) =>
+        fixture.debugElement.query(By.css("popup-header")).componentInstance.pageTitle();
+
+      it("drops the title when the switcher names the page", fakeAsync(() => {
+        vaultNav$.next({
+          vaults: [{ id: "user-1" }, { id: "org-1" }],
+          organizationDataOwnership: false,
+        });
+
+        const fixture = createWithFlag(true);
+
+        expect(title(fixture)).toBe("");
+
+        flush();
+        fixture.destroy();
+      }));
+
+      it("keeps the title when there is only one vault to switch between", fakeAsync(() => {
+        vaultNav$.next({ vaults: [{ id: "user-1" }], organizationDataOwnership: false });
+
+        const fixture = createWithFlag(true);
+
+        expect(title(fixture)).toBe("vault");
+
+        flush();
+        fixture.destroy();
+      }));
+
+      it("keeps the title with the flag off", fakeAsync(() => {
+        vaultNav$.next({
+          vaults: [{ id: "user-1" }, { id: "org-1" }],
+          organizationDataOwnership: false,
+        });
+
+        const fixture = createWithFlag(false);
+
+        expect(title(fixture)).toBe("vault");
+
+        flush();
+        fixture.destroy();
+      }));
+    });
+
     it("publishes the route's vault scope to the list table service", fakeAsync(() => {
       const fixture = createWithFlag(true);
 
