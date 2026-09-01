@@ -5743,6 +5743,9 @@
   "switchAccounts": {
     "message": "Switch accounts"
   },
+  "switchVault": {
+    "message": "Switch vault"
+  },
   "switchToAccount": {
     "message": "Switch to account"
   },

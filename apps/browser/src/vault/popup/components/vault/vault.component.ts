@@ -3,7 +3,7 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule } from "@angular/common";
 import { Component, DestroyRef, effect, inject, OnDestroy, OnInit } from "@angular/core";
 import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
-import { Router, RouterModule } from "@angular/router";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import {
   BehaviorSubject,
   combineLatest,
@@ -13,6 +13,7 @@ import {
   map,
   Observable,
   shareReplay,
+  startWith,
   switchMap,
   take,
   tap,
@@ -53,9 +54,13 @@ import {
   CalloutModule,
 } from "@bitwarden/components";
 import {
+  ALL_ITEMS_SCOPE,
   DecryptionFailureDialogComponent,
-  VaultItemsTransferService,
   DefaultVaultItemsTransferService,
+  resolveVaultScope,
+  type VaultScope,
+  VaultItemsTransferService,
+  VaultNavService,
   VaultOrganizationUserNotificationsComponent,
 } from "@bitwarden/vault";
 
@@ -81,6 +86,7 @@ import {
 } from "./new-item-dropdown/new-item-dropdown.component";
 import { VaultHeaderComponent } from "./vault-header/vault-header.component";
 import { VaultPopupListTableComponent } from "./vault-popup-list-table/vault-popup-list-table.component";
+import { VaultSwitcherComponent } from "./vault-switcher/vault-switcher.component";
 
 import { AutofillVaultListItemsComponent, VaultListItemsContainerComponent } from ".";
 
@@ -123,6 +129,7 @@ type VaultState = UnionOfValues<typeof VaultState>;
     VaultFadeInOutComponent,
     VaultOrganizationUserNotificationsComponent,
     VaultPopupListTableComponent,
+    VaultSwitcherComponent,
   ],
   providers: [{ provide: VaultItemsTransferService, useClass: DefaultVaultItemsTransferService }],
 })
@@ -236,6 +243,29 @@ export class VaultComponent implements OnInit, OnDestroy {
   protected readonly vfo1Enabled = toSignal(
     inject(ConfigService).getFeatureFlag$(FeatureFlag.VFO1Foundation),
     { initialValue: false },
+  );
+
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly vaultNavService = inject(VaultNavService);
+
+  /**
+   * The vault the `:vaultId` route segment narrows the page to, resolved against the account's
+   * vaults. Absent segment is All items; `vaultScopeGuard` has already turned away a segment that
+   * names no vault the account can reach.
+   *
+   * Route-derived rather than held in a service: the popup router cache stores the URL, so the
+   * selection survives a close and reopen with no cache key of its own, and the back button walks
+   * vault switches the way it walks any other navigation.
+   */
+  protected readonly vaultScope = toSignal(
+    combineLatest([
+      this.activatedRoute.paramMap,
+      this.activeUserId$.pipe(
+        switchMap((userId) => this.vaultNavService.viewModel$(userId)),
+        startWith(undefined),
+      ),
+    ]).pipe(map(([params, nav]) => resolveVaultScope(params.get("vaultId"), null, nav))),
+    { initialValue: ALL_ITEMS_SCOPE as VaultScope | null },
   );
 
   protected vaultIcon = VaultOpen;

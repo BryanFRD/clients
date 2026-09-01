@@ -53,6 +53,29 @@ const createScrollable = (scrollHeight = 1000, clientHeight = 500) => {
   return element;
 };
 
+/**
+ * A consumer that gates two projected nodes on one condition. Angular projects a `@if` block's
+ * content only when the block has a single root node, so a block wrapping both nodes drops each of
+ * them into the default content instead of its slot — silently, with no build error.
+ */
+@Component({
+  template: `
+    <popup-header pageTitle="Vault">
+      @if (enabled()) {
+        <span slot="title-start" data-testid="title-start">Switcher</span>
+      }
+      @if (enabled()) {
+        <span slot="end" data-testid="end">12 items</span>
+      }
+    </popup-header>
+  `,
+  imports: [PopupHeaderComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class GatedSlotsHostComponent {
+  readonly enabled = signal(true);
+}
+
 describe("PopupHeaderComponent", () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let scrollable: HTMLElement;
@@ -254,6 +277,39 @@ describe("PopupHeaderComponent", () => {
       await scrollTo(200);
 
       expect(collapsed()).toBe(false);
+    });
+  });
+
+  /**
+   * Regression: both nodes were gated by one `@if`, so neither reached its slot and both landed in
+   * the default content — which the two-bar header drops entirely, making them vanish.
+   */
+  describe("slots gated by a feature flag", () => {
+    let gated: ComponentFixture<GatedSlotsHostComponent>;
+
+    beforeEach(() => {
+      vfo1Enabled.next(true);
+      gated = TestBed.createComponent(GatedSlotsHostComponent);
+      gated.detectChanges();
+    });
+
+    const gatedSlot = (testId: string) =>
+      gated.debugElement.query(By.css(`[data-testid="${testId}"]`))?.nativeElement ?? null;
+
+    it("projects each gated node into its own slot", () => {
+      const appBar = gated.nativeElement.querySelector('[data-testid="app-bar"]');
+      const titleBar = gated.nativeElement.querySelector('[data-testid="title-bar"]');
+
+      expect(titleBar.contains(gatedSlot("title-start"))).toBe(true);
+      expect(appBar.contains(gatedSlot("end"))).toBe(true);
+    });
+
+    it("removes both nodes when the condition turns off", () => {
+      gated.componentInstance.enabled.set(false);
+      gated.detectChanges();
+
+      expect(gatedSlot("title-start")).toBeNull();
+      expect(gatedSlot("end")).toBeNull();
     });
   });
 

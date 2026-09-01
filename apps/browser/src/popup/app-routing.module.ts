@@ -99,6 +99,7 @@ import {
 } from "../vault/popup/guards/at-risk-passwords.guard";
 import { clearVaultStateGuard } from "../vault/popup/guards/clear-vault-state.guard";
 import { IntroCarouselGuard } from "../vault/popup/guards/intro-carousel.guard";
+import { popupVaultScopeGuard } from "../vault/popup/guards/vault-scope.guard";
 import { AdminSettingsComponent } from "../vault/popup/settings/admin-settings.component";
 import { AppearanceComponent } from "../vault/popup/settings/appearance.component";
 import { ArchiveComponent } from "../vault/popup/settings/archive.component";
@@ -754,6 +755,21 @@ const routes: Routes = [
         path: "vault",
         component: VaultComponent,
         canActivate: [authGuard],
+        canDeactivate: [clearVaultStateGuard],
+        data: { elevation: 0 } satisfies RouteDataProperties,
+      },
+      {
+        /**
+         * The vault scoped to one of the account's vaults, named by the same `:vaultId` segment
+         * web and desktop use — see `vaultScopeCommands`. The popup router cache stores the whole
+         * URL, so the selection survives a close and reopen without a cache key of its own.
+         *
+         * Same component and elevation as the unscoped route: this is the same page narrowed, so
+         * a switch between vaults should not animate as a push or a pop.
+         */
+        path: "vault/:vaultId",
+        component: VaultComponent,
+        canActivate: [authGuard, popupVaultScopeGuard],
         canDeactivate: [clearVaultStateGuard],
         data: { elevation: 0 } satisfies RouteDataProperties,
       },

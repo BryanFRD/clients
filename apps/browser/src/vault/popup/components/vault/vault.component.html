@@ -1,5 +1,17 @@
 <popup-page [hideOverflow]="showSkeletonsLoaders$ | async">
-  <popup-header slot="header" [pageTitle]="'vault' | i18n">
+  <!--
+    The two-bar header names the page with the vault switcher in `title-start`, so the title would
+    repeat it. `pageTitle` is required, and an empty one drops the `h1` rather than rendering blank.
+  -->
+  <popup-header slot="header" [pageTitle]="vfo1Enabled() ? '' : ('vault' | i18n)">
+    @if (vfo1Enabled()) {
+      <app-vault-switcher slot="title-start" [scope]="vaultScope()"></app-vault-switcher>
+    }
+    @if (vfo1Enabled()) {
+      <span slot="title-end" class="tw-text-sm" data-testid="vault-item-count">
+        {{ "itemCount" | i18n: (cipherCount$ | async) }}
+      </span>
+    }
     <ng-container slot="end">
       <app-new-item-dropdown
         [initialValues]="newItemItemValues$ | async"
@@ -131,7 +143,7 @@
     -->
     @if (vfo1Enabled()) {
       <div class="tw-flex tw-flex-col tw-justify-center tw-h-full">
-        <app-vault-popup-list-table></app-vault-popup-list-table>
+        <app-vault-popup-list-table [scope]="vaultScope()"></app-vault-popup-list-table>
       </div>
     } @else if (!vfo1Enabled() && vaultState === VaultStateEnum.NoResults) {
       <div class="tw-flex tw-flex-col tw-justify-center tw-h-full">

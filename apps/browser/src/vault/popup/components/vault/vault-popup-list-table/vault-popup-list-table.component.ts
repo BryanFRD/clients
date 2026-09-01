@@ -10,6 +10,7 @@ import {
   DestroyRef,
   inject,
   Injector,
+  input,
   signal,
   viewChild,
 } from "@angular/core";
@@ -51,6 +52,8 @@ import {
   TypographyModule,
 } from "@bitwarden/components";
 import {
+  ALL_ITEMS_SCOPE,
+  cipherInScope,
   matchesFolder,
   matchesSharedFolder,
   matchesType,
@@ -58,6 +61,8 @@ import {
   MY_VAULT,
   NO_FOLDER,
   OrgIconDirective,
+  type VaultScope,
+  VaultScopeType,
   Vfo1I18nPipe,
 } from "@bitwarden/vault";
 
@@ -127,6 +132,17 @@ export class VaultPopupListTableComponent {
   private readonly compactModeService = inject(CompactModeService);
   private readonly listTableService = inject(VaultPopupListTableService);
   private readonly listFiltersService = inject(VaultPopupListTableFiltersService);
+  /**
+   * The vault the `:vaultId` route segment narrows the page to, passed down from the page rather
+   * than read here: the route is the page's concern, and the table only applies what it resolves.
+   */
+  readonly scope = input<VaultScope | null>(ALL_ITEMS_SCOPE);
+
+  /** Whether the page is narrowed to a single vault, which drops the organization chip. */
+  protected readonly vaultSelected = computed(() => {
+    const scope = this.scope();
+    return scope != null && scope.type !== VaultScopeType.AllItems;
+  });
   private readonly platformUtilsService = inject(PlatformUtilsService);
   private readonly liveAnnouncer = inject(LiveAnnouncer);
   private readonly injector = inject(Injector);
@@ -173,10 +189,19 @@ export class VaultPopupListTableComponent {
   });
 
   /**
+   * The rows for the table: every row narrowed to the route's vault scope, the way the web vault
+   * narrows its own — see `cipherInScope`, which decides the vault and the item state together.
+   *
    * A suspended organization's ciphers still match its own filter, so they're withheld here rather
    * than upstream. Emptying the rows also hands the state to the table's empty slot.
    */
-  protected readonly rows = computed(() => (this.showDeactivatedOrg() ? [] : this.allRows()));
+  protected readonly rows = computed(() => {
+    if (this.showDeactivatedOrg()) {
+      return [];
+    }
+    const scope = this.scope() ?? ALL_ITEMS_SCOPE;
+    return this.allRows().filter((row) => cipherInScope(row.cipher, scope));
+  });
 
   protected readonly table = defineTable<VaultTableRow, "name">(this.rows);
 

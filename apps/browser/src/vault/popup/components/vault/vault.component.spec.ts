@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, NO_ERRORS_SCHEMA } from "@an
 import { ComponentFixture, TestBed, fakeAsync, flush, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { provideNoopAnimations } from "@angular/platform-browser/animations";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, convertToParamMap, Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { mock } from "jest-mock-extended";
 import { BehaviorSubject, Observable, Subject, of } from "rxjs";
@@ -36,9 +36,10 @@ import { DialogService } from "@bitwarden/components";
 import { StateProvider } from "@bitwarden/state";
 import {
   DecryptionFailureDialogComponent,
+  DefaultVaultItemsTransferService,
   VaultCopyButtonsService,
   VaultItemsTransferService,
-  DefaultVaultItemsTransferService,
+  VaultNavService,
   VaultOrganizationUserNotificationsComponent,
 } from "@bitwarden/vault";
 
@@ -48,6 +49,7 @@ import { IntroCarouselService } from "../../services/intro-carousel.service";
 import { VaultPopupAutofillService } from "../../services/vault-popup-autofill.service";
 import { VaultPopupItemsService } from "../../services/vault-popup-items.service";
 import { VaultPopupListFiltersService } from "../../services/vault-popup-list-filters.service";
+import { VaultPopupListTableFiltersService } from "../../services/vault-popup-list-table-filters.service";
 import { VaultPopupLoadingService } from "../../services/vault-popup-loading.service";
 import { VaultPopupScrollPositionService } from "../../services/vault-popup-scroll-position.service";
 import { AtRiskPasswordCalloutComponent } from "../at-risk-callout/at-risk-password-callout.component";
@@ -59,6 +61,7 @@ import { NewItemDropdownComponent } from "./new-item-dropdown/new-item-dropdown.
 import { VaultHeaderComponent } from "./vault-header/vault-header.component";
 import { VaultListItemsContainerComponent } from "./vault-list-items-container/vault-list-items-container.component";
 import { VaultPopupListTableComponent } from "./vault-popup-list-table/vault-popup-list-table.component";
+import { VaultSwitcherComponent } from "./vault-switcher/vault-switcher.component";
 import { VaultComponent } from "./vault.component";
 
 @Component({
@@ -78,6 +81,16 @@ export class PopupHeaderStubComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VaultHeaderStubComponent {}
+
+@Component({
+  selector: "app-vault-switcher",
+  standalone: true,
+  template: "",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class VaultSwitcherStubComponent {
+  readonly scope = input<unknown>(null);
+}
 
 @Component({
   selector: "app-current-account",
@@ -166,7 +179,10 @@ class VaultListItemsContainerStubComponent {
   template: "",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-class VaultPopupListTableStubComponent {}
+class VaultPopupListTableStubComponent {
+  /** Declares `scope` so the page's binding resolves with the real table removed. */
+  readonly scope = input<unknown>(null);
+}
 
 const mockDialogRef = {
   close: jest.fn(),
@@ -215,6 +231,8 @@ describe("VaultComponent", () => {
   const filtersSvc: any = {
     allFilters$: new Subject<any>(),
     filters$: new BehaviorSubject<any>({}),
+    // Read by the vault switcher in the header; empty keeps it hidden by default.
+    organizations$: new BehaviorSubject<any[]>([]),
     filterVisibilityState$: new BehaviorSubject<any>({}),
     numberOfAppliedFilters$: new BehaviorSubject<number>(0),
   };
@@ -286,6 +304,17 @@ describe("VaultComponent", () => {
         provideNoopAnimations(),
         { provide: VaultPopupItemsService, useValue: itemsSvc },
         { provide: VaultPopupListFiltersService, useValue: filtersSvc },
+        {
+          // Read by the vault switcher; empty organizations keep it hidden by default.
+          provide: VaultPopupListTableFiltersService,
+          useValue: { organizations$: new BehaviorSubject<any[]>([]) },
+        },
+        {
+          provide: VaultNavService,
+          useValue: {
+            viewModel$: () => of({ vaults: [], organizationDataOwnership: false }),
+          },
+        },
         { provide: VaultPopupLoadingService, useValue: loadingSvc },
         { provide: VaultPopupScrollPositionService, useValue: scrollSvc },
         {
@@ -312,7 +341,7 @@ describe("VaultComponent", () => {
         { provide: RestrictedItemTypesService, useValue: { restricted$: new BehaviorSubject([]) } },
         { provide: PlatformUtilsService, useValue: mock<PlatformUtilsService>() },
         { provide: AvatarService, useValue: mock<AvatarService>() },
-        { provide: ActivatedRoute, useValue: mock<ActivatedRoute>() },
+        { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({})) } },
         { provide: AuthService, useValue: mock<AuthService>() },
         { provide: AutofillService, useValue: mock<AutofillService>() },
         {
@@ -358,6 +387,7 @@ describe("VaultComponent", () => {
           VaultListItemsContainerComponent,
           VaultOrganizationUserNotificationsComponent,
           VaultPopupListTableComponent,
+          VaultSwitcherComponent,
         ],
         providers: [
           { provide: VaultItemsTransferService, useValue: DefaultVaultItemsTransferService },
@@ -377,6 +407,7 @@ describe("VaultComponent", () => {
           VaultListItemsContainerStubComponent,
           VaultOrganizationUserNotificationsStubComponent,
           VaultPopupListTableStubComponent,
+          VaultSwitcherStubComponent,
         ],
         providers: [{ provide: VaultItemsTransferService, useValue: vaultItemsTransferSvc }],
       },
@@ -503,6 +534,38 @@ describe("VaultComponent", () => {
 
       return fixture;
     }
+
+    /**
+     * `popup-header` is removed from the TestBed and `NO_ERRORS_SCHEMA` is on, so anything projected
+     * into it renders nowhere and the count element cannot be asserted on here. These cover the
+     * count's source instead; the flag gate on the header's own slots is exercised in
+     * `popup-header.component.spec.ts`, and the rendered placement is left to manual verification.
+     */
+    it("exposes the filtered cipher count for the header", fakeAsync(() => {
+      const fixture = createWithFlag(true);
+
+      itemsSvc.cipherCount$.next(10);
+
+      let count: number | undefined;
+      fixture.componentInstance["cipherCount$"].subscribe((c: number) => (count = c));
+      expect(count).toBe(10);
+
+      flush();
+    }));
+
+    it("tracks the count as filters change it", fakeAsync(() => {
+      const fixture = createWithFlag(true);
+
+      const seen: number[] = [];
+      fixture.componentInstance["cipherCount$"].subscribe((c: number) => seen.push(c));
+
+      itemsSvc.cipherCount$.next(10);
+      itemsSvc.cipherCount$.next(3);
+
+      expect(seen.slice(-2)).toEqual([10, 3]);
+
+      flush();
+    }));
 
     it("renders the table and drops the legacy header and list when the flag is on", fakeAsync(() => {
       const fixture = createWithFlag(true);

@@ -193,8 +193,10 @@ import {
 } from "@bitwarden/unlock";
 import {
   DefaultSshImportPromptService,
+  DefaultVaultNavService,
   PasswordRepromptService,
   SshImportPromptService,
+  VaultNavService,
 } from "@bitwarden/vault";
 
 import { AccountSwitcherService } from "../../auth/popup/account-switching/services/account-switcher.service";
@@ -897,6 +899,12 @@ const safeProviders: SafeProvider[] = [
     provide: AUTO_CONFIRM_NUDGE_SERVICE as SafeInjectionToken<AutoConfirmNudgeService>,
     useClass: AutoConfirmNudgeService,
     deps: [StateProvider, AutomaticUserConfirmationService],
+  }),
+  safeProvider({
+    // Reads the account's vaults for the header switcher and for `vaultScopeGuard`.
+    provide: VaultNavService,
+    useClass: DefaultVaultNavService,
+    deps: [],
   }),
 ];
 

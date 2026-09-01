@@ -26,7 +26,11 @@
       }
     </bit-filter-menu>
 
-    @if (organizationOptions().length) {
+    <!--
+      Do not show the vault filter if the user is scoped to a single vault.
+      Removing it rather than hiding it also removes it from the filter dialog.
+    -->
+    @if (organizationOptions().length && !vaultSelected()) {
       <bit-filter-menu key="organization" [placeholderText]="'vault' | vfo1I18n: 'vaults'" multiple>
         @for (option of organizationOptions(); track option.value.id) {
           <bit-filter-option
