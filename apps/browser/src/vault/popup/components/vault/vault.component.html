@@ -1,8 +1,4 @@
 <popup-page [hideOverflow]="showSkeletonsLoaders$ | async">
-  <!--
-    The two-bar header names the page with the vault switcher in `title-start`, so the title would
-    repeat it. `pageTitle` is required, and an empty one drops the `h1` rather than rendering blank.
-  -->
   <popup-header slot="header" [pageTitle]="vfo1Enabled() ? '' : ('vault' | i18n)">
     @if (vfo1Enabled()) {
       <app-vault-switcher slot="title-start" [scope]="vaultScope()"></app-vault-switcher>
