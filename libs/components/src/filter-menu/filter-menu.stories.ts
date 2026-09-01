@@ -65,6 +65,7 @@ export default {
               noMatchingItems: "No matching items",
               search: "Search",
               resetSearch: "Reset search",
+              clearSearch: "Clear by clicking here or pressing Esc.",
               clear: "Clear",
             }),
         },
