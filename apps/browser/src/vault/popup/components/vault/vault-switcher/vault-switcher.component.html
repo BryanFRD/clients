@@ -12,23 +12,24 @@
         {{ current.id === null ? ("allItems" | i18n) : current.label }}
       </span>
     }
-    <button
-      type="button"
-      class="tw-flex tw-bg-transparent tw-border-0 tw-px-0 tw-pt-0 tw-pb-1 -tw-mb-1 tw-cursor-pointer tw-rounded focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-primary-600 focus-visible:tw-ring-offset-2"
-      [bitMenuTriggerFor]="vaultOptions"
-      (click)="menuOpen.set(true)"
-      [attr.aria-label]="'switchVault' | i18n"
-      data-testid="vault-switcher"
-    >
-      <bit-icon
-        name="bwi-angle-down"
-        data-testid="vault-switcher-chevron"
-        class="tw-size-6 tw-shrink-0 tw-flex tw-text-lg tw-items-center tw-justify-center tw-leading-none tw-rounded tw-transition-colors"
-        [class.tw-text-primary-600]="menuOpen()"
-        [class.tw-bg-primary-100]="menuOpen()"
-        [class.tw-text-primary-700]="!menuOpen()"
-      ></bit-icon>
-    </button>
+    <div class="tw-flex tw-pb-1 -tw-mb-1" [bitMenuTriggerFor]="vaultOptions" role="none">
+      <button
+        type="button"
+        class="tw-size-6 tw-flex tw-bg-transparent tw-border-0 tw-p-0 tw-cursor-pointer tw-rounded focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-primary-600 focus-visible:tw-ring-offset-2"
+        (click)="menuOpen.set(true)"
+        [attr.aria-label]="'switchVault' | i18n"
+        data-testid="vault-switcher"
+      >
+        <bit-icon
+          name="bwi-angle-down"
+          data-testid="vault-switcher-chevron"
+          class="tw-size-6 tw-shrink-0 tw-flex tw-text-lg tw-items-center tw-justify-center tw-leading-none tw-rounded tw-transition-colors"
+          [class.tw-text-primary-600]="menuOpen()"
+          [class.tw-bg-primary-100]="menuOpen()"
+          [class.tw-text-primary-700]="!menuOpen()"
+        ></bit-icon>
+      </button>
+    </div>
   </div>
   <bit-menu #vaultOptions (closed)="menuOpen.set(false)">
     @for (entry of entries(); track entry.id) {
