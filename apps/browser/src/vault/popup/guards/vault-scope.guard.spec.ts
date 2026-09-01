@@ -1,5 +1,11 @@
 import { TestBed } from "@angular/core/testing";
-import { ActivatedRouteSnapshot, convertToParamMap, Router, UrlTree } from "@angular/router";
+import {
+  ActivatedRouteSnapshot,
+  convertToParamMap,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from "@angular/router";
 import { of } from "rxjs";
 
 import { AccountService } from "@bitwarden/common/auth/abstractions/account.service";
@@ -20,7 +26,8 @@ describe("popupVaultScopeGuard", () => {
         {
           paramMap: convertToParamMap(vaultId == null ? {} : { vaultId }),
         } as ActivatedRouteSnapshot,
-        {} as any,
+        // `CanActivateFn` requires both parameters; this guard reads only the route.
+        {} as RouterStateSnapshot,
       ),
     ) as Promise<boolean | UrlTree>;
 
