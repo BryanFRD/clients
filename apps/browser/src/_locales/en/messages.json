@@ -615,6 +615,9 @@
   "resetSearch": {
     "message": "Reset search"
   },
+  "clearSearch": {
+    "message": "Clear by clicking here or pressing Esc."
+  },
   "archiveNoun": {
     "message": "Archive",
     "description": "Noun"
