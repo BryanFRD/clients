@@ -117,6 +117,30 @@ describe("VaultSwitcherComponent", () => {
       expect(trigger().nativeElement.getAttribute("aria-label")).toBe("switchVault");
     });
 
+    /**
+     * The trigger has to sit on the button itself: the directive restores focus to its own host on
+     * every close path, and its `aria-expanded`/`aria-haspopup` bindings land there too. On a
+     * non-focusable wrapper the focus call is a no-op and the button announces no popup state.
+     */
+    /**
+     * `bitTypography` is a static attribute, so a missing `TypographyModule` matches no directive
+     * and raises no error — the label silently loses its `h5` classes.
+     */
+    it("styles the label as a heading", () => {
+      const label = fixture.debugElement.query(By.css("[bitTypography]")).nativeElement;
+
+      expect(label.classList).toContain("!tw-text-base");
+      expect(label.classList).toContain("tw-font-medium");
+    });
+
+    it("carries the menu trigger on the focusable button", () => {
+      const button = trigger().nativeElement as HTMLElement;
+
+      expect(button.tagName).toBe("BUTTON");
+      expect(button.getAttribute("aria-haspopup")).toBe("menu");
+      expect(button.getAttribute("aria-expanded")).toBe("false");
+    });
+
     it("renders a tile on the trigger and on every entry", () => {
       expect(fixture.debugElement.queryAll(By.css("bit-icon-tile")).length).toBe(1);
 

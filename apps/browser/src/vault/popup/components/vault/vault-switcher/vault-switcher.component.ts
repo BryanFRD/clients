@@ -1,21 +1,19 @@
-import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { Router } from "@angular/router";
 import { switchMap } from "rxjs";
 
-import { JslibModule } from "@bitwarden/angular/jslib.module";
 import { AccountService } from "@bitwarden/common/auth/abstractions/account.service";
 import { getUserId } from "@bitwarden/common/auth/services/account.service";
 import { OrganizationId } from "@bitwarden/common/types/guid";
 import {
-  ButtonModule,
-  IconButtonModule,
   IconModule,
   IconTileComponent,
   IconTileOptions,
   MenuModule,
+  TypographyModule,
 } from "@bitwarden/components";
+import { I18nPipe } from "@bitwarden/ui-common";
 import {
   ALL_ITEMS_SCOPE,
   MY_VAULT_ROUTE,
@@ -42,23 +40,15 @@ interface VaultSwitcherEntry {
 /**
  * Vault switcher for the extension popup's title bar.
  *
- * Navigates to the scoped vault route rather than holding a selection of its own, so the popup
- * router cache restores the vault on reopen and the back button walks switches like any other
- * navigation. The page reads the scope back off `:vaultId` — see `VaultComponent.vaultScope`.
+ * Navigates to the scoped vault route rather than holding a selection of its own,
+ * so the popup router cache restores the vault on reopen.
+ * The page reads the scope back off `:vaultId` — see `VaultComponent.vaultScope`.
  */
 @Component({
   selector: "app-vault-switcher",
   templateUrl: "vault-switcher.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    JslibModule,
-    ButtonModule,
-    IconButtonModule,
-    IconModule,
-    IconTileComponent,
-    MenuModule,
-  ],
+  imports: [I18nPipe, IconModule, IconTileComponent, MenuModule, TypographyModule],
 })
 export class VaultSwitcherComponent {
   private readonly router = inject(Router);
