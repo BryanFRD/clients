@@ -51,6 +51,8 @@ import {
   TypographyModule,
 } from "@bitwarden/components";
 import {
+  collectionInScope,
+  idString,
   matchesFolder,
   matchesSharedFolder,
   matchesType,
@@ -259,8 +261,42 @@ export class VaultPopupListTableComponent {
    * keeps the trailing path segment the tree gave it, so a child of "Work" shows as "EU" — meaning
    * options are tracked by id, since "Work/Personal" and "Home/Personal" flatten to one label.
    */
-  protected readonly collectionOptions = computed(() => flattenOptions(this.collectionTree()));
-  protected readonly folderOptions = computed(() => flattenOptions(this.folderTree()));
+  /**
+   * Narrowed to the scoped vault's own collections: the vault chip is gone while a vault is scoped,
+   * so the filter service sees no organization selection and hands back every organization's — see
+   * `collectionInScope`, which the web and desktop vaults narrow with for the same reason. A
+   * personal-vault scope owns no collections, so the chip empties and hides.
+   */
+  protected readonly collectionOptions = computed(() => {
+    const scope = this.listTableService.vaultScope();
+    return flattenOptions(this.collectionTree()).filter(
+      (option) => option.value != null && collectionInScope(option.value, scope),
+    );
+  });
+  /**
+   * Narrowed to folders the scoped vault's items actually live in, for the same reason
+   * {@link collectionOptions} is: the vault chip is gone while a vault is scoped, so the filter
+   * service sees no organization selection and hands back every folder.
+   *
+   * Folders are the user's own and span vaults, so unlike collections there is no `inScope` helper
+   * for them — a folder belongs to the page when any row the scope admits sits in it, which mirrors
+   * how the filter service narrows folders against an organization chip selection.
+   */
+  protected readonly folderOptions = computed(() => {
+    const options = flattenOptions(this.folderTree());
+
+    if (this.listTableService.vaultScope().type === VaultScopeType.AllItems) {
+      return options;
+    }
+
+    const rows = this.uniqueRows();
+    return options.filter((option) => {
+      const id = option.value?.id;
+      return id
+        ? rows.some((row) => idString(row.cipher.folderId) === id)
+        : rows.some((row) => row.cipher.folderId == null);
+    });
+  });
 
   /** Exposed for the folder chip's `[value]`, which falls back to this sentinel for "no folder". */
   protected readonly NO_FOLDER = NO_FOLDER;

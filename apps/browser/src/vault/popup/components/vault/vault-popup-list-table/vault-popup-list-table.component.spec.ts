@@ -21,6 +21,7 @@ import { ConfigService } from "@bitwarden/common/platform/abstractions/config/co
 import { EnvironmentService } from "@bitwarden/common/platform/abstractions/environment.service";
 import { I18nService } from "@bitwarden/common/platform/abstractions/i18n.service";
 import { PlatformUtilsService } from "@bitwarden/common/platform/abstractions/platform-utils.service";
+import { OrganizationId } from "@bitwarden/common/types/guid";
 import { CipherArchiveService } from "@bitwarden/common/vault/abstractions/cipher-archive.service";
 import { CipherService } from "@bitwarden/common/vault/abstractions/cipher.service";
 import { TotpService } from "@bitwarden/common/vault/abstractions/totp.service";
@@ -39,11 +40,12 @@ import {
   ToastService,
 } from "@bitwarden/components";
 import { StateProvider } from "@bitwarden/state";
-import { PasswordRepromptService, VaultCopyButtonsService } from "@bitwarden/vault";
+import { PasswordRepromptService, VaultCopyButtonsService, VaultScopeType } from "@bitwarden/vault";
 
 import { VaultPopupAutofillService } from "../../../services/vault-popup-autofill.service";
 import { VaultPopupItemsService } from "../../../services/vault-popup-items.service";
 import { VaultPopupListTableFiltersService } from "../../../services/vault-popup-list-table-filters.service";
+import { VaultPopupListTableService } from "../../../services/vault-popup-list-table.service";
 import { VaultPopupLoadingService } from "../../../services/vault-popup-loading.service";
 import { VaultPopupSectionService } from "../../../services/vault-popup-section.service";
 import { PopupCipherViewLike } from "../../../views/popup-cipher.view";
@@ -126,6 +128,7 @@ describe("VaultPopupListTableComponent", () => {
   const cipherTypes$ = new BehaviorSubject<ChipFilterOption<CipherType>[]>([]);
   const organizations$ = new BehaviorSubject<ChipFilterOption<Organization>[]>([]);
   const collections$ = new BehaviorSubject<ChipFilterOption<CollectionView>[]>([]);
+  let listTableSvc: VaultPopupListTableService;
   const folders$ = new BehaviorSubject<ChipFilterOption<FolderView>[]>([]);
 
   const vaultPopupListTableFiltersService = {
@@ -229,6 +232,8 @@ describe("VaultPopupListTableComponent", () => {
       ],
     }).compileComponents();
 
+    listTableSvc = TestBed.inject(VaultPopupListTableService);
+    listTableSvc.setScope(null);
     fixture = TestBed.createComponent(VaultPopupListTableComponent);
     component = fixture.componentInstance;
   });
@@ -477,6 +482,86 @@ describe("VaultPopupListTableComponent", () => {
         name: "Gamma",
         organizationId: "org-2",
       } as unknown as CollectionView;
+
+      /**
+       * Folders span vaults, so a scoped page keeps only the folders its own items sit in — the
+       * same reason the shared-folder chip is narrowed below.
+       */
+      it("keeps only folders the scoped vault's items are in", () => {
+        const ORG_ID = "11111111-1111-4111-8111-111111111111";
+        filteredCiphers$.next([
+          makeCipher({ id: "personal", organizationId: null, folderId: "folder-1" }),
+          makeCipher({ id: "org", organizationId: ORG_ID, folderId: "folder-2" }),
+        ]);
+        folders$.next([
+          { value: { id: "folder-1", name: "Personal" } as FolderView, label: "Personal" },
+          { value: { id: "folder-2", name: "Work" } as FolderView, label: "Work" },
+        ]);
+        listTableSvc.setScope({ type: VaultScopeType.MyVault });
+        fixture.detectChanges();
+
+        expect(component["folderOptions"]().map((o: any) => o.label)).toEqual(["Personal"]);
+      });
+
+      it("keeps every folder when unscoped", () => {
+        filteredCiphers$.next([
+          makeCipher({ id: "personal", organizationId: null, folderId: "folder-1" }),
+          makeCipher({ id: "org", organizationId: "org-1", folderId: "folder-2" }),
+        ]);
+        folders$.next([
+          { value: { id: "folder-1", name: "Personal" } as FolderView, label: "Personal" },
+          { value: { id: "folder-2", name: "Work" } as FolderView, label: "Work" },
+        ]);
+        listTableSvc.setScope(null);
+        fixture.detectChanges();
+
+        expect(component["folderOptions"]().map((o: any) => o.label)).toEqual(["Personal", "Work"]);
+      });
+
+      /**
+       * The vault chip is gone while a vault is scoped, so the filter service sees no organization
+       * selection and hands back every organization's collections. The page has to narrow them or
+       * it offers folders none of its items could be in.
+       */
+      it("keeps only the scoped organization's shared folders", () => {
+        collections$.next([
+          { value: col1, label: "Alpha" },
+          { value: col3, label: "Gamma" },
+        ]);
+        listTableSvc.setScope({
+          type: VaultScopeType.Organization,
+          organizationId: "org-1" as OrganizationId,
+        });
+        fixture.detectChanges();
+
+        expect(component["collectionOptions"]().map((o: any) => o.label)).toEqual(["Alpha"]);
+      });
+
+      /** A personal vault owns no shared folders, so the chip empties and hides. */
+      it("drops every shared folder under a personal-vault scope", () => {
+        collections$.next([
+          { value: col1, label: "Alpha" },
+          { value: col3, label: "Gamma" },
+        ]);
+        listTableSvc.setScope({ type: VaultScopeType.MyVault });
+        fixture.detectChanges();
+
+        expect(component["collectionOptions"]()).toEqual([]);
+      });
+
+      it("keeps every organization's shared folders when unscoped", () => {
+        collections$.next([
+          { value: col1, label: "Alpha" },
+          { value: col3, label: "Gamma" },
+        ]);
+        listTableSvc.setScope(null);
+        fixture.detectChanges();
+
+        expect(component["collectionOptions"]().map((o: any) => o.label)).toEqual([
+          "Alpha",
+          "Gamma",
+        ]);
+      });
 
       it("does not group when all collections belong to one organization", () => {
         collections$.next([
