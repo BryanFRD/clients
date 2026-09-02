@@ -9,6 +9,7 @@ import {
   firstValueFrom,
   map,
   Observable,
+  shareReplay,
   startWith,
   tap,
   timer,
@@ -180,6 +181,8 @@ export class VaultPopupListTableService {
         ...section(filteredCiphers, "allItems"),
       ];
     }),
+    // The table renders these and the header counts them, so build the list once per emission.
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   /**

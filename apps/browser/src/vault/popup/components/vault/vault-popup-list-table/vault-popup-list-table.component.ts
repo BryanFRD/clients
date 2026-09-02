@@ -51,6 +51,7 @@ import {
   TypographyModule,
 } from "@bitwarden/components";
 import {
+  cipherInScope,
   collectionInScope,
   idString,
   matchesFolder,
@@ -66,6 +67,7 @@ import {
 
 import BrowserPopupUtils from "../../../../../platform/browser/browser-popup-utils";
 import { VaultPopupAutofillService } from "../../../services/vault-popup-autofill.service";
+import { VaultPopupItemsService } from "../../../services/vault-popup-items.service";
 import { VaultPopupListTableFiltersService } from "../../../services/vault-popup-list-table-filters.service";
 import {
   VaultPopupListTableService,
@@ -129,6 +131,7 @@ export class VaultPopupListTableComponent {
   private readonly vaultPopupSectionService = inject(VaultPopupSectionService);
   private readonly compactModeService = inject(CompactModeService);
   private readonly listTableService = inject(VaultPopupListTableService);
+  private readonly vaultPopupItemsService = inject(VaultPopupItemsService);
   private readonly listFiltersService = inject(VaultPopupListTableFiltersService);
   /** Whether the page is narrowed to a single vault, which drops the organization chip. */
   protected readonly vaultSelected = computed(
@@ -273,28 +276,34 @@ export class VaultPopupListTableComponent {
       (option) => option.value != null && collectionInScope(option.value, scope),
     );
   });
+  /** Every active cipher, before the search narrows it — the folder chip's options come from here. */
+  private readonly activeCiphers = toSignal(this.vaultPopupItemsService.activeCiphers$, {
+    initialValue: [] as PopupCipherViewLike[],
+  });
+
   /**
-   * Narrowed to folders the scoped vault's items actually live in, for the same reason
+   * Narrowed to folders the scoped vault's items live in, for the same reason
    * {@link collectionOptions} is: the vault chip is gone while a vault is scoped, so the filter
    * service sees no organization selection and hands back every folder.
    *
-   * Folders are the user's own and span vaults, so unlike collections there is no `inScope` helper
-   * for them — a folder belongs to the page when any row the scope admits sits in it, which mirrors
-   * how the filter service narrows folders against an organization chip selection.
+   * Narrowed against the unsearched cipher list rather than the rendered rows, the way the filter
+   * service narrows folders against an organization chip selection — an option that disappeared as
+   * the user typed could not be used to widen the results again.
    */
   protected readonly folderOptions = computed(() => {
     const options = flattenOptions(this.folderTree());
+    const scope = this.listTableService.vaultScope();
 
-    if (this.listTableService.vaultScope().type === VaultScopeType.AllItems) {
+    if (scope.type === VaultScopeType.AllItems) {
       return options;
     }
 
-    const rows = this.uniqueRows();
+    const inScope = this.activeCiphers().filter((cipher) => cipherInScope(cipher, scope));
     return options.filter((option) => {
       const id = option.value?.id;
       return id
-        ? rows.some((row) => idString(row.cipher.folderId) === id)
-        : rows.some((row) => row.cipher.folderId == null);
+        ? inScope.some((cipher) => idString(cipher.folderId) === id)
+        : inScope.some((cipher) => cipher.folderId == null);
     });
   });
 

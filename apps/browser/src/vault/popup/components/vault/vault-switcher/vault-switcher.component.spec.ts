@@ -126,6 +126,11 @@ describe("VaultSwitcherComponent", () => {
      * `bitTypography` is a static attribute, so a missing `TypographyModule` matches no directive
      * and raises no error — the label silently loses its `h5` classes.
      */
+    /** The header drops its own `h1` while this label renders, so this is the page's only one. */
+    it("renders the label as the page's h1", () => {
+      expect(fixture.debugElement.query(By.css("h1"))).not.toBeNull();
+    });
+
     it("styles the label as a heading", () => {
       const label = fixture.debugElement.query(By.css("[bitTypography]")).nativeElement;
 

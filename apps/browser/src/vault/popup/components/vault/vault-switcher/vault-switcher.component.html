@@ -8,9 +8,13 @@
         [color]="current.tile.color"
         [emphasis]="current.tile.emphasis ?? 'subtle'"
       ></bit-icon-tile>
-      <span bitTypography="h5" class="!tw-mb-0 tw-text-main">
+      <!--
+        The page's `h1`: the header drops its own whenever this label renders, so the vault page
+        would otherwise have no top-level heading above the list's `h2` sections.
+      -->
+      <h1 bitTypography="h5" class="!tw-mb-0 tw-text-main">
         {{ current.id === null ? ("allItems" | i18n) : current.label }}
-      </span>
+      </h1>
     }
     <button
       type="button"

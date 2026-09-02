@@ -105,7 +105,11 @@ describe("VaultPopupListTableComponent", () => {
     doAutofill: jest.fn(),
   };
 
+  /** Unsearched active ciphers; the folder chip's options come from here, not the rendered rows. */
+  const activeCiphers$ = new BehaviorSubject<PopupCipherViewLike[]>([]);
+
   const vaultPopupItemsService = {
+    activeCiphers$: activeCiphers$.asObservable(),
     autoFillCiphers$: autoFillCiphers$.asObservable(),
     favoriteCiphers$: favoriteCiphers$.asObservable(),
     filteredCiphers$: filteredCiphers$.asObservable(),
@@ -134,8 +138,6 @@ describe("VaultPopupListTableComponent", () => {
   const vaultPopupListTableFiltersService = {
     restoreFilters$: jest.fn().mockReturnValue(of({})),
     saveFilters: jest.fn(),
-    cachedVaultScopeId: jest.fn().mockReturnValue(null),
-    saveVaultScope: jest.fn(),
     selectedOrganizations: signal<Organization[]>([]),
     cipherTypes$: cipherTypes$.asObservable(),
     organizations$: organizations$.asObservable(),
@@ -157,6 +159,7 @@ describe("VaultPopupListTableComponent", () => {
     autoFillCiphers$.next([]);
     favoriteCiphers$.next([]);
     filteredCiphers$.next([]);
+    activeCiphers$.next([]);
     loading$.next(false);
     searchText$.next("");
     hasSearchText$.next(false);
@@ -489,7 +492,7 @@ describe("VaultPopupListTableComponent", () => {
        */
       it("keeps only folders the scoped vault's items are in", () => {
         const ORG_ID = "11111111-1111-4111-8111-111111111111";
-        filteredCiphers$.next([
+        activeCiphers$.next([
           makeCipher({ id: "personal", organizationId: null, folderId: "folder-1" }),
           makeCipher({ id: "org", organizationId: ORG_ID, folderId: "folder-2" }),
         ]);
@@ -503,8 +506,27 @@ describe("VaultPopupListTableComponent", () => {
         expect(component["folderOptions"]().map((o: any) => o.label)).toEqual(["Personal"]);
       });
 
+      /**
+       * The options describe what the vault holds, not what the search matches — an option that
+       * vanished as the user typed could not be used to widen the results again.
+       */
+      it("keeps its options while a search narrows the rows", () => {
+        activeCiphers$.next([
+          makeCipher({ id: "personal", organizationId: null, folderId: "folder-1" }),
+        ]);
+        // The rendered rows are search-filtered; the chip's options are not.
+        filteredCiphers$.next([]);
+        folders$.next([
+          { value: { id: "folder-1", name: "Personal" } as FolderView, label: "Personal" },
+        ]);
+        listTableSvc.setScope({ type: VaultScopeType.MyVault });
+        fixture.detectChanges();
+
+        expect(component["folderOptions"]().map((o: any) => o.label)).toEqual(["Personal"]);
+      });
+
       it("keeps every folder when unscoped", () => {
-        filteredCiphers$.next([
+        activeCiphers$.next([
           makeCipher({ id: "personal", organizationId: null, folderId: "folder-1" }),
           makeCipher({ id: "org", organizationId: "org-1", folderId: "folder-2" }),
         ]);
