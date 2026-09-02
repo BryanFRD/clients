@@ -134,7 +134,6 @@ describe("TargetSystemEditComponent — create mode", () => {
     rotationSdk = mock<RotationSdkService>();
     toastService = mock<ToastService>();
     await setupCreate(rotationSdk);
-    // Override toast with our spy
     TestBed.overrideProvider(ToastService, { useValue: toastService });
     router = TestBed.inject(Router);
     fixture = TestBed.createComponent(TargetSystemEditComponent);
@@ -157,7 +156,6 @@ describe("TargetSystemEditComponent — create mode", () => {
     rotationSdk.createTargetSystem.mockResolvedValue(makeSystem());
     const nav = jest.spyOn(router, "navigate").mockResolvedValue(true);
 
-    // Patch form to valid state via the formGroup
     const createForm = (
       fixture.componentInstance as unknown as { createForm: { patchValue: (v: unknown) => void } }
     ).createForm;
@@ -209,7 +207,6 @@ describe("TargetSystemEditComponent — create mode", () => {
     const call = rotationSdk.createTargetSystem.mock.calls[0];
     expect(call).toBeDefined();
     expect(call![1].method).toBe(TargetSystemMethod.Manual);
-    // Manual systems now carry an editable password policy.
     expect(call![1].passwordPolicy).toBeDefined();
   });
 
@@ -217,7 +214,6 @@ describe("TargetSystemEditComponent — create mode", () => {
     rotationSdk.createTargetSystem.mockResolvedValue(makeSystem());
     jest.spyOn(router, "navigate").mockResolvedValue(true);
 
-    // Leave name empty (invalid)
     const comp = fixture.componentInstance as unknown as { submitCreate: () => Promise<void> };
     await comp.submitCreate();
 
@@ -228,7 +224,6 @@ describe("TargetSystemEditComponent — create mode", () => {
     TestBed.resetTestingModule();
     const comp = await setupCreateWithTemplate("manual");
     expect(comp.createForm.getRawValue().method).toBe(TargetSystemMethod.Manual);
-    // No integration card for Manual (not Automatic), but the password-policy card is now shown.
     expect((comp as unknown as { isAutomatic: () => boolean }).isAutomatic()).toBe(false);
     expect((comp as unknown as { showPolicyCard: () => boolean }).showPolicyCard()).toBe(true);
   });
@@ -412,6 +407,13 @@ describe("TargetSystemEditComponent — create mode (rendered)", () => {
     patchKind(TargetSystemKind.CustomScript);
     expect(el.querySelector("#target-system-edit_checkbox_session-termination")).toBeTruthy();
   });
+
+  it("keeps the not-supported notice off a kind that does terminate sessions", () => {
+    const el = fixture.nativeElement as HTMLElement;
+    patchKind(TargetSystemKind.Entra);
+
+    expect(el.querySelector("#target-system-edit_session-termination-unsupported")).toBeNull();
+  });
 });
 
 describe("TargetSystemEditComponent — edit mode", () => {
@@ -464,7 +466,6 @@ describe("TargetSystemEditComponent — edit mode", () => {
     comp.nameForm.patchValue({ name: "Renamed" });
     await comp.submitEdit();
 
-    // One call, not two: the server takes the name, the policy and the capability together.
     expect(rotationSdk.updateTargetSystem).toHaveBeenCalledTimes(1);
     expect(rotationSdk.updateTargetSystem).toHaveBeenCalledWith(
       ORG_ID,
@@ -528,7 +529,6 @@ describe("TargetSystemEditComponent — edit mode", () => {
   });
 
   it("offers the reverse action for a retired system and returns it to service", async () => {
-    // Rebuild against a system that is already out of service.
     TestBed.resetTestingModule();
     const retiredSdk = mock<RotationSdkService>();
     const retiredToast = mock<ToastService>();
@@ -559,7 +559,6 @@ describe("TargetSystemEditComponent — edit mode", () => {
   });
 
   it("shows termination withdrawal warning when supportsSessionTermination unchecked", async () => {
-    // existing has supportsSessionTermination: true; uncheck it
     const comp = fixture.componentInstance as unknown as {
       policyForm: { patchValue: (v: unknown) => void };
       showTerminationWarning: () => boolean;
@@ -624,7 +623,6 @@ describe("TargetSystemEditComponent — edit mode", () => {
   });
 
   it("navigates back when not found", async () => {
-    // Rebuild for a missing id scenario
     TestBed.resetTestingModule();
     const rotationApi2 = mock<RotationSdkService>();
     const toastService2 = mock<ToastService>();
